@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +17,10 @@ import android.widget.LinearLayout;
 
 import com.example.invscan.adapters.ClassroomAdapter;
 import com.example.invscan.domain.enteties.Category;
+import com.example.invscan.domain.enteties.Classroom;
 import com.example.invscan.interfaces.MenuListener;
+
+import java.util.List;
 
 public class HomeFragment extends  Fragment {
 
@@ -56,15 +60,20 @@ public class HomeFragment extends  Fragment {
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
+        adapter = new ClassroomAdapter();
+        recyclerView.setAdapter(adapter);
+    }
 
-
-        /*         LinearLayout lHead = view.findViewById(R.id.lHead);
-            lHead.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onStart() {
+        super.onStart();
+        viewModel.getAllClassrooms();
+        viewModel.getListClassrooms().observe(getViewLifecycleOwner(), new Observer<List<Classroom>>() {
             @Override
-            public void onClick(View view) {
-                menuListener.onMenuClick(2);
+            public void onChanged(List<Classroom> classrooms) {
+                adapter.submitList(classrooms);
             }
-        });*/
+        });
     }
 
     @Override
