@@ -3,26 +3,25 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/camera_layout.xml" value="0.2825" />
-        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/cameraback.xml" value="0.1955" />
-        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/ic_camera.xml" value="0.2825" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/ic_home.xml" value="0.105" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/ic_search.xml" value="0.1" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/ic_settings.xml" value="0.1" />
-        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/roundcorner.xml" value="0.2825" />
-        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/scanbutton_theme.xml" value="0.1955" />
-        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/search_layout.xml" value="0.2825" />
-        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/thumb.xml" value="0.125" />
-        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/track.xml" value="0.125" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/activity_main.xml" value="0.18" />
-        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/activity_scan.xml" value="0.25" />
-        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/fragment_home.xml" value="0.15384615384615385" />
-        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/fragment_search.xml" value="0.33" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/fragment_search.xml" value="0.14990942028985507" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/fragment_settings.xml" value="0.14990942028985507" />
+        <entry key="..\:/works/androidWorks/InvSnac/app/src/main/res/layout/activity_main.xml" value="0.4041666666666667" />
+        <entry key="..\:/works/androidWorks/InvSnac/app/src/main/res/layout/activity_scan.xml" value="0.4041666666666667" />
+        <entry key="..\:/works/androidWorks/InvSnac/app/src/main/res/layout/classroom_item.xml" value="0.30234375" />
+        <entry key="..\:/works/androidWorks/InvSnac/app/src/main/res/layout/fragment_dashboard.xml" value="0.4041666666666667" />
+        <entry key="..\:/works/androidWorks/InvSnac/app/src/main/res/layout/fragment_home.xml" value="0.4041666666666667" />
+        <entry key="..\:/works/androidWorks/InvSnac/app/src/main/res/layout/fragment_search.xml" value="0.4041666666666667" />
+        <entry key="..\:/works/androidWorks/InvSnac/app/src/main/res/layout/fragment_settings.xml" value="0.4041666666666667" />
+        <entry key="..\:/works/androidWorks/InvSnac/app/src/main/res/layout/inv_item_layout.xml" value="0.403125" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="6dp"
+    app:cardCornerRadius="40dp"
+    android:layout_margin="12dp">
+
+    <LinearLayout
+        android:id="@+id/object1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:textAlignment="center">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/itmonitor"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="20dp"/>
+
+        <TextView
+            android:id="@+id/tvInvNum"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:fontFamily="sans-serif-black"
+            tools:text="241200001477"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:layout_marginEnd="8dp"/>
+
+        <Switch
+            android:id="@+id/switchCheck"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:thumb="@drawable/thumb"
+            android:track="@drawable/track"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

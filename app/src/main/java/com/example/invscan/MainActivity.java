@@ -2,24 +2,16 @@ package com.example.invscan;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.example.invscan.interfaces.MenuListener;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MenuListener {
     // Инциализация навигационной панели
     MeowBottomNavigation bottomNav;
     private Button button;
@@ -93,5 +85,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    @Override
+    public void onMenuClick(int menuOption) {
+        if (menuOption == 2) {
+            ////loadFragment(SearchFragment.newInstance(classroomNum));
+            //// Инициализация выбранного объекта
+            bottomNav.show(2,true);
+        }
+    }
 }
