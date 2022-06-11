@@ -1,12 +1,23 @@
 package com.example.invscan;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,16 +60,60 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        View v = inflater.inflate(R.layout.fragment_search, container, false);
+
+        EditText searchlay = (EditText) v.findViewById(R.id.search_field);
+        Button clearbut = (Button) v.findViewById(R.id.clearfilter);
+
+        searchlay.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                clearbut.setVisibility(Button.VISIBLE);
+                clearbut.setActivated(true);
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String sUsername = searchlay.getText().toString();
+                if (sUsername.matches("")) {
+                    clearbut.setVisibility(Button.INVISIBLE);
+                    clearbut.setActivated(false);
+                }
+            }
+        });
+
+
+        // Сегодняшняя дата
+        TextView datenow = (TextView) v.findViewById(R.id.textviewdate);
+        TextView hoursnow = (TextView) v.findViewById(R.id.texthours);
+
+        long date = System.currentTimeMillis();
+        long hours = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, ''yy");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm");
+        String dateString = sdf.format(date);
+        String dateString1 = sdf1.format(hours);
+        datenow.setText(dateString);
+        hoursnow.setText(dateString1);
+
+        return v;
     }
+
+
+
+
 }

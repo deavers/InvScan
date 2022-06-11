@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "168115266350",
+    "project_id": "invscan-44f8b",
+    "storage_bucket": "invscan-44f8b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168115266350:android:9c7b9838cf246fc409d0bf",
+        "android_client_info": {
+          "package_name": "com.example.invscan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168115266350-d9i3trrm0s4a1cc12lpjrh6q91hduuer.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBk90EQ94Nx0JHLM6QtQOyWWC1RPNhlkZ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168115266350-d9i3trrm0s4a1cc12lpjrh6q91hduuer.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

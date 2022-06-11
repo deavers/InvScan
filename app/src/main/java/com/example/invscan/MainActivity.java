@@ -2,19 +2,27 @@ package com.example.invscan;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 
-public class MainActivity extends AppCompatActivity  {
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+public class MainActivity extends AppCompatActivity {
     // Инциализация навигационной панели
     MeowBottomNavigation bottomNav;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +36,7 @@ public class MainActivity extends AppCompatActivity  {
         bottomNav.add(new MeowBottomNavigation.Model(1,R.drawable.ic_home));
         bottomNav.add(new MeowBottomNavigation.Model(2,R.drawable.ic_search));
         bottomNav.add(new MeowBottomNavigation.Model(3,R.drawable.ic_settings));
+
 
         // Показать нав. панель
         bottomNav.setOnShowListener(new MeowBottomNavigation.ShowListener() {
@@ -67,10 +76,7 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
 
-        // Переменная выбора кабинета
-        LinearLayout scanselect = (LinearLayout)findViewById(R.id.linear1);
-
-
+        // Кнопка для сканирования
     }
 
 
@@ -80,6 +86,11 @@ public class MainActivity extends AppCompatActivity  {
                 .beginTransaction()
                 .replace(R.id.nav_host_fragment_container,fragment, null)
                 .commit();
+    }
+
+    public void openactiviti(View target) {
+        Intent intent = new Intent(this, ScanActivity.class);
+        startActivity(intent);
     }
 
 
