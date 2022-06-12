@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,8 +24,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.googlecode.tesseract.android.TessBaseAPI;
+
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -35,11 +41,18 @@ public class ScanActivity extends AppCompatActivity {
     private ImageView captureIV;
     private TextView resultIV;
     private Button photoBtn,sendBtn;
-    private Bitmap imageBitmap;
     private EditText res;
+    private static final String lang = "kaz";
+    String result = "";
 
+    private TessBaseAPI tessBaseApi;
+
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final int REQUEST_CODE_PERMISSION = 1;
     private static final int REQUEST_CODE_CAPTURE_IMAGE = 2;
+
+    private static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/tesseract/";
+    private static final String TESSDATA = "tessdata";
 
     private String currentImagePath;
 
@@ -57,7 +70,7 @@ public class ScanActivity extends AppCompatActivity {
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                detectText();
+                doOCR();
             }
         });
 
@@ -168,8 +181,107 @@ public class ScanActivity extends AppCompatActivity {
     }
 
     private void detectText() {
-
+        doOCR();
     }
+
+    private void doOCR() {
+        prepareTesseract();
+        startOCR();
+    }
+
+    private void prepareDirectory(String path) {
+
+        File dir = new File(path);
+        if (!dir.exists()) {
+            if (!dir.mkdirs()) {
+                Toast.makeText(this, "ERROR: Creation of directory " + path + " failed, check does Android Manifest have permission to write to external storage.", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            //Toast.makeText(this, "Created directory " + path, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void prepareTesseract() {
+        try {
+            prepareDirectory(DATA_PATH + TESSDATA);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        copyTessDataFiles(TESSDATA);
+    }
+
+    private void copyTessDataFiles(String path) {
+        try {
+            String[] fileList = getAssets().list(path);
+
+            for (String fileName : fileList) {
+
+                // open file within the assets folder
+                // if it is not already there copy it to the sdcard
+                String pathToDataFile = DATA_PATH + path + "/" + fileName;
+                if (!(new File(pathToDataFile)).exists()) {
+
+                    InputStream in = getAssets().open(path + "/" + fileName);
+
+                    OutputStream out = new FileOutputStream(pathToDataFile);
+
+                    // Transfer bytes from in to out
+                    byte[] buf = new byte[1024];
+                    int len;
+
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+                    in.close();
+                    out.close();
+
+                    Toast.makeText(this, "Copied " + fileName + "to tessdata", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } catch (IOException e) {
+            Toast.makeText(this, "Unable to copy files to tessdata ", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void startOCR() {
+        try {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 4; // 1 - means max size. 4 - means maxsize/4 size. Don't use value <4, because you need more memory in the heap to store your data.
+            Bitmap bitmap = BitmapFactory.decodeFile(currentImagePath, options);
+
+            result = extractText(bitmap);
+            resultIV.setText(result);
+
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
+    private String extractText(Bitmap bitmap) {
+        try {
+            tessBaseApi = new TessBaseAPI();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+            if (tessBaseApi == null) {
+                Toast.makeText(this, "TessBaseAPI is null. TessFactory not returning tess object.", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        tessBaseApi.init(DATA_PATH, lang);
+
+        Toast.makeText(this, "Training file loaded", Toast.LENGTH_SHORT).show();
+        tessBaseApi.setImage(bitmap);
+        String extractedText = "empty img";
+        try {
+            extractedText = tessBaseApi.getUTF8Text();
+        } catch (Exception e) {
+            Toast.makeText(this, "Error in recognizing text.", Toast.LENGTH_SHORT).show();
+        }
+        tessBaseApi.end();
+        return extractedText;
+    }
+
 
 
 }
