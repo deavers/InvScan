@@ -7,20 +7,34 @@
     android:background="@drawable/bgapps"
     tools:context=".ScanActivity">
 
-    <ImageView
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:id="@+id/CardViewImage"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/PhotoCaptureImage"
-        android:src="@drawable/ic_camera"
-        android:background="@drawable/cameraback"
-        />
+        android:layout_height="350dp"
+        app:cardCornerRadius="120dp"
+        app:cardBackgroundColor="@color/transparent"
+        app:cardElevation="0dp"
+        android:background="@drawable/cameraback">
+
+        <ImageView
+            android:id="@+id/PhotoCaptureImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_camera"
+            android:scaleType="centerCrop"
+            />
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/DetectedText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/PhotoCaptureImage"
+        android:layout_below="@+id/CardViewImage"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
