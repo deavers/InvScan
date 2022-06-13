@@ -167,6 +167,8 @@ public class ScanActivity extends AppCompatActivity {
             try {
                 captureIV.setImageBitmap(getScaledBitmap(captureIV));
 
+
+
                 File capturedImageFile = new File(currentImagePath);
 
             } catch (Exception exception) {
@@ -174,28 +176,10 @@ public class ScanActivity extends AppCompatActivity {
             }
         }
 
-        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE
-        && resultCode == Activity.RESULT_OK) {
-            Uri imageuri = CropImage.getPickImageResultUri(this,data);
-            if (CropImage.isReadExternalStoragePermissionsRequired(this,imageuri)){
-                uri = imageuri;
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
-            } else {
-                startCrop(imageuri);
-            }
-        }
-
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                captureIV.setImageURI(result.getUri());
-            }
-        }
-
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void startCrop(Uri imageuri) {
+    private void CropImage(Uri imageuri) {
         CropImage.activity(imageuri)
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setMultiTouchEnabled(true)

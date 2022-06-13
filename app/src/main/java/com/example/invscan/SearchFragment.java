@@ -107,13 +107,6 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        countobj.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         clearbut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
