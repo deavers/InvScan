@@ -133,7 +133,6 @@
         android:layout_margin="20dp"
         android:background="@drawable/countobjects"
         android:text="0"
-        android:onClick="openactiviticart"
         android:textColor="@color/white"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"

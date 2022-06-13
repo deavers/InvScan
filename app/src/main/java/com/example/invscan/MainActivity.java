@@ -85,10 +85,10 @@ public class MainActivity extends AppCompatActivity implements MenuListener {
         startActivity(intent);
     }
 
-    public void openactiviticart(View target) {
+/*    public void openactiviticart(View target) {
         Intent intent = new Intent(this, CartListActivity.class);
         startActivity(intent);
-    }
+    }*/
 
 
     @Override

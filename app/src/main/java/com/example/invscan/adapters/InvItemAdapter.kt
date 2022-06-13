@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.invscan.R
 import com.example.invscan.databinding.InvItemLayoutBinding
+import com.example.invscan.domain.enteties.InvItemChecked
 import com.example.invscan.domain.enteties.InventoryItem
 import com.example.invscan.interfaces.OnInvItemListener
 import com.example.invscan.utils.getImgIdByCategory
 
-class InvItemAdapter:ListAdapter<InventoryItem,InvItemAdapter.InvViewHolder>(DiffInvItemCallback()){
+class InvItemAdapter:ListAdapter<InvItemChecked,InvItemAdapter.InvViewHolder>(DiffInvItemCallback()){
 
     var onItemCheckListener:OnInvItemListener? = null
 
@@ -25,14 +26,23 @@ class InvItemAdapter:ListAdapter<InventoryItem,InvItemAdapter.InvViewHolder>(Dif
         return InvViewHolder(binding)
     }
 
+/*    override fun onViewRecycled(holder: InvViewHolder) {
+        super.onViewRecycled(holder)
+        holder.binding.apply {
+            switchCheck.isChecked = false
+            tvInvNum.text = ""
+        }
+    }*/
+
     override fun onBindViewHolder(holder: InvViewHolder, position: Int) {
         val invItem = getItem(position)
         holder.binding.apply {
-            imgCategory.setImageResource(getImgIdByCategory(invItem.category_id))
+            imgCategory.setImageResource(getImgIdByCategory(invItem.item.category_id))
             switchCheck.setOnClickListener {
-                onItemCheckListener?.onInvItemClick(invItem,switchCheck.isChecked)
+                onItemCheckListener?.onInvItemClick(invItem.item,switchCheck.isChecked)
             }
-            tvInvNum.text = invItem.inventory_num
+            switchCheck.isChecked = invItem.checked
+            tvInvNum.text = invItem.item.inventory_num
         }
     }
 

@@ -13,3 +13,15 @@ fun getImgIdByCategory(categoryId:Int):Int{
         else ->R.drawable.chair
     }
 }
+
+fun getNameByCategory(categoryId:Int):String{
+    return when(categoryId){
+        1 -> "Мониторы"
+        2-> "МФУ"
+        3-> "Принтеры"
+        4-> "Кондиционеры"
+        5->"Шкафы"
+        6->"Столы"
+        else ->"Стулья"
+    }
+}

@@ -1,6 +1,5 @@
 package com.example.invscan;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,27 +10,20 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.invscan.adapters.InvItemAdapter;
+import com.example.invscan.domain.enteties.InvItemChecked;
 import com.example.invscan.domain.enteties.InventoryItem;
 import com.example.invscan.interfaces.OnInvItemListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
@@ -41,7 +33,8 @@ public class SearchFragment extends Fragment {
     ArrayAdapter<String> adapter;*/
     private InvItemAdapter adapter;
     private SearchViewModel viewModel;
-    List<InventoryItem> listItems;
+    //List<InventoryItem> listItems;
+    List<InvItemChecked> itemsCheckedList;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -120,11 +113,30 @@ public class SearchFragment extends Fragment {
         adapter.setOnItemCheckListener(new OnInvItemListener() {
             @Override
             public void onInvItemClick(@NonNull InventoryItem inventoryItem, boolean checked) {
-                Log.d("tag", ""+inventoryItem.getInventory_num()+" ="+checked);
+                //Log.d("tag", ""+inventoryItem.getInventory_num()+" ="+checked);
+                for(InvItemChecked itemChecked: itemsCheckedList){
+                    if (itemChecked.getItem().getInventory_num().equals(inventoryItem.getInventory_num())){
+                        itemChecked.setChecked(checked);
+                        break;
+                    }
+                }
             }
         });
 
-        listItems = new ArrayList<>();
+        countobj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(CartListActivity.newInstance(
+                        getActivity(),
+                        itemsCheckedList,
+                        itemsCheckedList.size(),
+                        getCountOfCheck()
+                ));
+            }
+        });
+
+        //listItems = new ArrayList<>();
+        itemsCheckedList = new ArrayList<>();
         // Сегодняшняя дата
         long date = System.currentTimeMillis();
         long hours = System.currentTimeMillis();
@@ -134,33 +146,44 @@ public class SearchFragment extends Fragment {
         String dateString1 = sdf1.format(hours);
         datenow.setText(dateString);
         hoursnow.setText(dateString1);
+
+        viewModel.getItemsByClassRoomNum(SELECTED_NUM);
+        viewModel.getItems().observe(getViewLifecycleOwner(), new Observer<List<InventoryItem>>() {
+            @Override
+            public void onChanged(List<InventoryItem> inventoryItems) {
+                //listItems.clear();
+                itemsCheckedList.clear();
+                for (InventoryItem item:inventoryItems){
+                    itemsCheckedList.add(new InvItemChecked(item,false));
+                }
+                adapter.submitList(itemsCheckedList);
+                //listItems.addAll(inventoryItems);
+            }
+        });
+
+    }
+
+    private Integer getCountOfCheck(){
+        Integer count = 0;
+        for(InvItemChecked itemChecked: itemsCheckedList){
+            if (itemChecked.getChecked()){
+                count++;
+            }
+        }
+        return count;
     }
 
     private void onFilterItems(String newText) {
-        List<InventoryItem> listFilter = new ArrayList<>();
+        List<InvItemChecked> listFilter = new ArrayList<>();
         if(!newText.equals("")){
-            for (InventoryItem item:listItems){
-                if (item.getInventory_num().contains(newText)){
+            for (InvItemChecked item: itemsCheckedList){
+                if (item.getItem().getInventory_num().contains(newText)){
                     listFilter.add(item);
                 }
             }
             adapter.submitList(listFilter);
         } else {
-            adapter.submitList(listItems);
+            adapter.submitList(itemsCheckedList);
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        viewModel.getItemsByClassRoomNum(SELECTED_NUM);
-        viewModel.getItems().observe(getViewLifecycleOwner(), new Observer<List<InventoryItem>>() {
-            @Override
-            public void onChanged(List<InventoryItem> inventoryItems) {
-                adapter.submitList(inventoryItems);
-                listItems.clear();
-                listItems.addAll(inventoryItems);
-            }
-        });
     }
 }
