@@ -90,20 +90,6 @@
                 android:textSize="12sp"
                 android:visibility="invisible" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/scanner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/scanbutton_theme"
-                android:onClick="openactiviti"
-                android:text="Scan"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
         </RelativeLayout>
 
     </LinearLayout>
@@ -116,6 +102,19 @@
         tools:listitem="@layout/inv_item_layout"
         android:scrollbars="vertical"
         app:layout_constraintTop_toBottomOf="@id/lPanel"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/countobjectss"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/countobjects"
+        android:text="0"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

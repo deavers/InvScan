@@ -13,15 +13,22 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class SearchFragment extends Fragment {
+
+    String[] items;
+    ArrayList<String> listItems;
+    ArrayAdapter<String> adapter;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -64,6 +71,8 @@ public class SearchFragment extends Fragment {
         TextView datenow = (TextView) view.findViewById(R.id.textviewdate);
         TextView hoursnow = (TextView) view.findViewById(R.id.texthours);
 
+        Button countobj = (Button) view.findViewById(R.id.countobjectss);
+
         searchlay.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -83,6 +92,21 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        countobj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
+        clearbut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchlay.setText("");
+            }
+        });
+
         // Сегодняшняя дата
         long date = System.currentTimeMillis();
         long hours = System.currentTimeMillis();
@@ -93,4 +117,5 @@ public class SearchFragment extends Fragment {
         datenow.setText(dateString);
         hoursnow.setText(dateString1);
     }
+
 }

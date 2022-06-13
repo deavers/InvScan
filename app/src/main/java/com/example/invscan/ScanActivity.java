@@ -1,6 +1,7 @@
 package com.example.invscan;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +29,9 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageActivity;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,8 +49,10 @@ public class ScanActivity extends AppCompatActivity {
     private TextView resultIV;
     private Button photoBtn,sendBtn;
     private EditText res;
-    private static final String lang = "kaz";
+    private static final String lang = "eng";
     String result = "";
+
+    Uri uri;
 
     private TessBaseAPI tessBaseApi;
 
@@ -90,9 +99,13 @@ public class ScanActivity extends AppCompatActivity {
                     );
                 } else {
                     dispatchCaptureImageIntent();
+                    CropImage.startPickImageActivity(ScanActivity.this);
                 }
             }
         });
+
+
+        
     }
 
     private void dispatchCaptureImageIntent() {
@@ -130,6 +143,7 @@ public class ScanActivity extends AppCompatActivity {
                 ".jpg",
                 directory
         );
+
         currentImagePath = imageFile.getAbsolutePath();
         return imageFile;
     }
@@ -158,11 +172,36 @@ public class ScanActivity extends AppCompatActivity {
             } catch (Exception exception) {
                 Toast.makeText(this,exception.getMessage(), Toast.LENGTH_SHORT).show();
             }
+        }
 
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE
+        && resultCode == Activity.RESULT_OK) {
+            Uri imageuri = CropImage.getPickImageResultUri(this,data);
+            if (CropImage.isReadExternalStoragePermissionsRequired(this,imageuri)){
+                uri = imageuri;
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+            } else {
+                startCrop(imageuri);
+            }
+        }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                captureIV.setImageURI(result.getUri());
+            }
         }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    private void startCrop(Uri imageuri) {
+        CropImage.activity(imageuri)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setMultiTouchEnabled(true)
+                .start(this);
+    }
+
 
     private Bitmap getScaledBitmap(ImageView imageView) {
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -180,10 +219,6 @@ public class ScanActivity extends AppCompatActivity {
         return BitmapFactory.decodeFile(currentImagePath, options);
     }
 
-    private void detectText() {
-        doOCR();
-    }
-
     private void doOCR() {
         prepareTesseract();
         startOCR();
@@ -197,7 +232,7 @@ public class ScanActivity extends AppCompatActivity {
                 Toast.makeText(this, "ERROR: Creation of directory " + path + " failed, check does Android Manifest have permission to write to external storage.", Toast.LENGTH_LONG).show();
             }
         } else {
-            //Toast.makeText(this, "Created directory " + path, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Created directory " + path, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -281,7 +316,5 @@ public class ScanActivity extends AppCompatActivity {
         tessBaseApi.end();
         return extractedText;
     }
-
-
 
 }

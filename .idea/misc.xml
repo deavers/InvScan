@@ -5,12 +5,14 @@
       <map>
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/camera_layout.xml" value="0.2825" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/cameraback.xml" value="0.1955" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/countobjects.xml" value="0.346" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/ic_camera.xml" value="0.2825" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/ic_home.xml" value="0.105" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/ic_search.xml" value="0.1" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/ic_settings.xml" value="0.1" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/roundcorner.xml" value="0.2825" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/scanbutton_theme.xml" value="0.1955" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/scanbuttons.xml" value="0.346" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/search_layout.xml" value="0.2825" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/thumb.xml" value="0.125" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/track.xml" value="0.125" />

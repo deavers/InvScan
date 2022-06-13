@@ -6,19 +6,25 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InvScan"
         tools:targetApi="31">
+        <activity
+            android:name=".CartListActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/Theme.InvScan" />
         <activity
             android:name=".ScanActivity"
             android:exported="false" />
@@ -35,25 +41,20 @@
         </activity>
 
         <provider
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.invscan.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true"
-            android:name="androidx.core.content.FileProvider">
-
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_path"/>
-
+                android:resource="@xml/provider_path" />
             <meta-data
                 android:name="com.google.mlkit.vision.DEPENDENCIES"
                 android:value="ocr" />
-
             <meta-data
                 android:name="preloaded_fonts"
                 android:resource="@array/preloaded_fonts" />
-
         </provider>
-
     </application>
 
 </manifest>
