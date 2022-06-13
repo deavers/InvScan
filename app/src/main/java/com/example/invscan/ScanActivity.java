@@ -1,7 +1,11 @@
 package com.example.invscan;
 
+import static com.example.invscan.utils.ConstsKt.getImgIdByCategory;
+
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -27,7 +31,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.invscan.domain.enteties.InventoryItem;
 import com.googlecode.tesseract.android.TessBaseAPI;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageActivity;
@@ -52,6 +59,8 @@ public class ScanActivity extends AppCompatActivity {
     private static final String lang = "eng";
     String result = "";
 
+    private ScanViewModel viewModel;
+
     Uri uri;
 
     private TessBaseAPI tessBaseApi;
@@ -69,7 +78,7 @@ public class ScanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
-
+        viewModel = new ViewModelProvider(this).get(ScanViewModel.class);
         captureIV = findViewById(R.id.PhotoCaptureImage);
         resultIV = findViewById(R.id.DetectedText);
         photoBtn = findViewById(R.id.NewPhoto);
@@ -103,9 +112,36 @@ public class ScanActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        viewModel.getFoundedItem().observe(this, new Observer<InventoryItem>() {
+            @Override
+            public void onChanged(InventoryItem inventoryItem) {
+                alertDialog(inventoryItem);
+            }
+        });
+    }
 
-        
+    private void alertDialog(InventoryItem foundedItem) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        if (foundedItem == null){
+            alertDialog.setTitle("Не найден объект");
+            alertDialog.setMessage("Инвентарный номер не определен");
+        } else {
+            alertDialog.setTitle("Найден объект");
+            alertDialog.setMessage("Инвентарный номер определен!");
+            alertDialog.setIcon(getImgIdByCategory(foundedItem.getCategory_id()));
+        }
+
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogInterface, int which){
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 
     private void dispatchCaptureImageIntent() {
@@ -271,6 +307,8 @@ public class ScanActivity extends AppCompatActivity {
 
             result = extractText(bitmap);
             resultIV.setText(result);
+
+            viewModel.getItemByNum(result);
 
         } catch (Exception e) {
             e.getMessage();
