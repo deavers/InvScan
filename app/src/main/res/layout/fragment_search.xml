@@ -57,20 +57,22 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp">
 
-            <EditText
+            <androidx.appcompat.widget.SearchView
+                app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/search_field"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="6dp"
                 android:background="@drawable/search_layout"
-                android:ems="10"
+                android:ems="7"
                 android:fontFamily="sans-serif-light"
                 android:hint="Введите Инв. номер"
                 android:inputType="number"
@@ -79,8 +81,27 @@
                 android:textSize="20sp" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnScan"
+                app:layout_constraintTop_toBottomOf="@id/search_field"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/scanbutton_theme"
+                android:onClick="openactiviti"
+                android:text="Scan"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/clearfilter"
+                app:layout_constraintTop_toBottomOf="@id/search_field"
+                app:layout_constraintStart_toStartOf="parent"
                 android:layout_width="51dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="15dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/search_field"
                 android:layout_alignStart="@+id/search_field"
@@ -90,7 +111,7 @@
                 android:textSize="12sp"
                 android:visibility="invisible" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

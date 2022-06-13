@@ -17,8 +17,12 @@ import com.example.invscan.adapters.ClassroomAdapter;
 import com.example.invscan.domain.enteties.Category;
 import com.example.invscan.domain.enteties.Classroom;
 import com.example.invscan.interfaces.MenuListener;
+import com.example.invscan.interfaces.OnClassroomListener;
 
 import java.util.List;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 public class HomeFragment extends  Fragment {
 
@@ -60,6 +64,13 @@ public class HomeFragment extends  Fragment {
         recyclerView.setHasFixedSize(true);
         adapter = new ClassroomAdapter();
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new OnClassroomListener() {
+            @Override
+            public void onClassroomClick(@NonNull String num) {
+                SearchFragment.SELECTED_NUM = num;
+                menuListener.onMenuClick(2);
+            }
+        });
     }
 
     @Override
