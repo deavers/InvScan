@@ -35,6 +35,8 @@ public class SettingsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
+
+
     }
 
     @Override

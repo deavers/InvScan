@@ -81,14 +81,9 @@ public class MainActivity extends AppCompatActivity implements MenuListener {
     }
 
     public void openactiviti(View target) {
-        Intent intent = new Intent(this, ScanActivity.class);
+        Intent intent = new Intent(this, ScannerActivity.class);
         startActivity(intent);
     }
-
-/*    public void openactiviticart(View target) {
-        Intent intent = new Intent(this, CartListActivity.class);
-        startActivity(intent);
-    }*/
 
 
     @Override

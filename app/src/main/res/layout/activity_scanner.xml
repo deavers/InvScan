@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgapps"
+    tools:context=".ScannerActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:id="@+id/CardViewImage"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        app:cardCornerRadius="40dp"
+        app:cardBackgroundColor="@color/transparent"
+        app:cardElevation="0dp"
+        android:background="@drawable/cameraback">
+
+        <ImageView
+            android:id="@+id/imageIV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_camera"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            />
+
+    </androidx.cardview.widget.CardView>
+
+    <EditText
+        android:id="@+id/resultEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/CardViewImage"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:inputType="textMultiLine"
+        android:maxHeight="150dp"
+        android:padding="20dp"
+        android:text="24142100554"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/NewPhotoBT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/resultEt"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/scanbuttons"
+        android:text="Сфотографировать"
+        android:textAllCaps="false"
+        android:textSize="19sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/GalleryBT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/NewPhotoBT"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/scanbuttons"
+        android:text="Галерея"
+        android:textAllCaps="false"
+        android:textSize="19sp" />
+
+
+</RelativeLayout>

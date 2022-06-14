@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.invscan.adapters.InvItemAdapter;
@@ -35,6 +37,7 @@ public class SearchFragment extends Fragment {
     private SearchViewModel viewModel;
     //List<InventoryItem> listItems;
     List<InvItemChecked> itemsCheckedList;
+    Integer counting = 0;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -79,6 +82,7 @@ public class SearchFragment extends Fragment {
         TextView hoursnow = (TextView) view.findViewById(R.id.texthours);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         Button countobj = (Button) view.findViewById(R.id.countobjectss);
+        Switch onoffobj = (Switch) view.findViewById(R.id.switchCheck);
 
         searchlay.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -99,6 +103,20 @@ public class SearchFragment extends Fragment {
                 return true;
             }
         });
+
+        if (onoffobj != null) {
+            onoffobj.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    if (isChecked) {
+                        counting++;
+                    } else {
+                        counting--;
+                    }
+                    countobj.setText(counting);
+                }
+            });
+        }
 
         clearbut.setOnClickListener(new View.OnClickListener() {
             @Override

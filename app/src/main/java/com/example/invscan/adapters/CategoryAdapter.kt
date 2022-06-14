@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.invscan.databinding.CategoryItemBinding
 import com.example.invscan.domain.enteties.CategoryWithCount
+import com.example.invscan.domain.enteties.InventoryItem
 import com.example.invscan.utils.getImgIdByCategory
 
 class CategoryAdapter:ListAdapter<CategoryWithCount,CategoryAdapter.CategoryViewHolder>(DiffCategoryCallback()) {
