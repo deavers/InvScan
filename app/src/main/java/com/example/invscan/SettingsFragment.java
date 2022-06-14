@@ -1,14 +1,56 @@
 package com.example.invscan;
 
+import android.Manifest;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.provider.MediaStore;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 public class SettingsFragment extends Fragment {
+
+    TextView mResultEt;
+    ImageView mPreviewIv;
+
+    private ScanViewModel viewModel;
+    private static final int CAMERA_REQ_CODE = 200;
+    private static final int STORAGE_REQ_CODE = 400;
+    private static final int IMAGE_PICK_GALLERY_CODE = 1000;
+    private static final int IMAGE_PICK_CAMERA_CODE = 1001;
+
+
+    String cameraPermission[];
+    String storagePermission[];
+
+    Uri image_uri;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -35,8 +77,6 @@ public class SettingsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
-
-
     }
 
     @Override
@@ -44,5 +84,14 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_settings, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Button scanneract = (Button) view.findViewById(R.id.scanerbycapimg);
+        Button scannerreal = (Button) view.findViewById(R.id.scanrealtime);
+
     }
 }

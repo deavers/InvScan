@@ -1,5 +1,6 @@
 package com.example.invscan;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,14 +31,11 @@ import java.util.List;
 
 public class SearchFragment extends Fragment {
 
-/*    String[] items;
-    ArrayList<String> listItems;
-    ArrayAdapter<String> adapter;*/
     private InvItemAdapter adapter;
     private SearchViewModel viewModel;
-    //List<InventoryItem> listItems;
     List<InvItemChecked> itemsCheckedList;
     Integer counting = 0;
+
 
     public SearchFragment() {
         // Required empty public constructor
@@ -64,12 +62,33 @@ public class SearchFragment extends Fragment {
 //            mParam2 = getArguments().getString(ARG_PARAM2);
         }
         Log.d("tag", SELECTED_NUM);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+       /* View rootView = getActivity().getSupportFragmentManager(R.layout.);
+
+        String text1;
+
+        Bundle data = getArguments();
+        if (data != null) {
+            text1 = data.getString("key1");
+
+            TextView kabinet = (TextView) rootView.findViewById(R.id.kabinet);
+            kabinet.setText(text1);
+
+        }*/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_search, container, false);
+
+        return rootView;
     }
 
     @Override
@@ -83,6 +102,15 @@ public class SearchFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         Button countobj = (Button) view.findViewById(R.id.countobjectss);
         Switch onoffobj = (Switch) view.findViewById(R.id.switchCheck);
+        Button scannerbt = (Button) view.findViewById(R.id.btnScan);
+
+        scannerbt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ScannerActivity.class);
+                startActivity(intent);
+            }
+        });
 
         searchlay.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

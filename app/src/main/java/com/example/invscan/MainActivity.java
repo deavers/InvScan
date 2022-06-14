@@ -1,6 +1,7 @@
 package com.example.invscan;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
@@ -14,12 +15,22 @@ import com.example.invscan.interfaces.MenuListener;
 public class MainActivity extends AppCompatActivity implements MenuListener {
     // Инциализация навигационной панели
     MeowBottomNavigation bottomNav;
-    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Fragment fragment1 = new SearchFragment();
+
+        if (fragment1 == new SearchFragment()) {
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                String value = extras.getString("key");
+                extras.putString("key1",value);
+                fragment1.setArguments(extras);
+            }
+        }
 
         // Переменная навигационной панели
         bottomNav = findViewById(R.id.bottomNav);
@@ -27,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements MenuListener {
         // Объекты навигационной панели
         bottomNav.add(new MeowBottomNavigation.Model(1,R.drawable.ic_home));
         bottomNav.add(new MeowBottomNavigation.Model(2,R.drawable.ic_search));
-        bottomNav.add(new MeowBottomNavigation.Model(3,R.drawable.ic_settings));
+        bottomNav.add(new MeowBottomNavigation.Model(3,R.drawable.ic_filter));
 
 
         // Показать нав. панель
@@ -67,24 +78,15 @@ public class MainActivity extends AppCompatActivity implements MenuListener {
                 /*Toast.makeText(getApplicationContext(),"You clicked "+item.getId(), Toast.LENGTH_SHORT).show();*/
             }
         });
-
-        // Кнопка для сканирования
     }
 
-
-    private void loadFragment(Fragment fragment) {
+    public void loadFragment(Fragment fragment) {
         // Замена страниц
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.nav_host_fragment_container,fragment, null)
                 .commit();
     }
-
-    public void openactiviti(View target) {
-        Intent intent = new Intent(this, ScannerActivity.class);
-        startActivity(intent);
-    }
-
 
     @Override
     public void onMenuClick(int menuOption) {

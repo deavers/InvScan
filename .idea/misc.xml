@@ -3,30 +3,43 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/button_error_background.xml" value="0.1" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/button_neutral_background.xml" value="0.1155" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/button_warning_background.xml" value="0.1155" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/camera_layout.xml" value="0.2825" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/cameraback.xml" value="0.1955" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/countobjects.xml" value="0.346" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/dialog_background.xml" value="0.1155" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/ic_camera.xml" value="0.2825" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/ic_home.xml" value="0.105" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/ic_search.xml" value="0.1" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/ic_settings.xml" value="0.1" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/itogo.xml" value="0.346" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/layout_error_dialog.xml" value="0.1155" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/roundcorner.xml" value="0.2825" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/scanbutton_theme.xml" value="0.1955" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/scanbuttons.xml" value="0.346" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/search_layout.xml" value="0.2825" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/sucess_background.xml" value="0.1155" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/thumb.xml" value="0.125" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/track.xml" value="0.125" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/warning_background.xml" value="0.1155" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/activity_cart_list.xml" value="0.25" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/activity_scan.xml" value="0.25" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/activity_scanner.xml" value="0.33" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/activity_splash_screen.xml" value="0.22" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/category_item.xml" value="0.36666666666666664" />
-        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/fragment_home.xml" value="0.15384615384615385" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/fragment_first.xml" value="0.2" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/fragment_search.xml" value="0.33" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/fragment_second.xml" value="0.36666666666666664" />
-        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/fragment_settings.xml" value="0.25" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/fragment_settings.xml" value="0.33" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/inv_item_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/layout_error_dialog.xml" value="0.22" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/layout_neutral_dialog.xml" value="0.1" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/layout_sucess_dialog.xml" value="0.22" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/layout_warning_dialog.xml" value="0.22" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/menu/menu_main.xml" value="0.17552083333333332" />
       </map>
     </option>

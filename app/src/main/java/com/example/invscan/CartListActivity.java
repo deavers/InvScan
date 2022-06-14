@@ -8,19 +8,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.invscan.adapters.CategoryAdapter;
 import com.example.invscan.domain.enteties.CategoryWithCount;
 import com.example.invscan.domain.enteties.InvItemChecked;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CartListActivity extends AppCompatActivity {
 
@@ -33,19 +42,21 @@ public class CartListActivity extends AppCompatActivity {
     private Integer countItems;
     private Integer countChecked;
 
+    String dateString;
+
+    public String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/InvScaner";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_list);
-        initView();
-        otchot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Формирование отчёта
 
-                // Поделиться отчётом
-            }
-        });
+        initView();
+
+        // Сегодняшняя дата
+        long date = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yy_MM_dd");
+        dateString = sdf.format(date);
 
         Intent intent = getIntent();
         ArrayList<InvItemChecked> list = intent.getParcelableArrayListExtra(LIST_KEY);
@@ -58,6 +69,19 @@ public class CartListActivity extends AppCompatActivity {
         adapter = new CategoryAdapter();
         recyclerViewList.setAdapter(adapter);
         setListOnAdapter(list);
+
+        File dir = new File(path);
+        dir.mkdir();
+
+        otchot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Формирование отчёта
+                formOtchot();
+                // Поделиться отчётом
+
+            }
+        });
     }
 
     List<CategoryWithCount> categoryWithCounts;
@@ -86,6 +110,43 @@ public class CartListActivity extends AppCompatActivity {
         otchot = findViewById(R.id.otchot);
     }
 
+    public void formOtchot() {
+        File file = new File (path + "/" + dateString + ".txt");
+        String[] categorys = new String[0];
+        for (int i = 0; i < Integer.parseInt((String) totalselected.getText());i++) {
+            categorys = ("" + totalselected.getText()).split("");
+        }
+
+
+        Toast.makeText(getApplicationContext(), "Отчёт сохранён", Toast.LENGTH_SHORT).show();
+
+        Save (file, totalselected.getText().toString(),basecount.getText().toString());
+
+    }
+
+    public static void Save (File file, String data, String data1) {
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file);
+        }
+        catch (FileNotFoundException e ) { e.printStackTrace();}
+
+        try {
+            try {
+                fos.write("Выбранных объектов - ".getBytes(StandardCharsets.UTF_8));
+                fos.write(data.getBytes(StandardCharsets.UTF_8));
+                fos.write("\nВ базе находиться - ".getBytes(StandardCharsets.UTF_8));
+                fos.write(data1.getBytes(StandardCharsets.UTF_8));
+            }
+            catch (IOException e) { e.printStackTrace(); }
+        }
+        finally {
+            try {
+                fos.close();
+            }
+            catch (IOException e) { e.printStackTrace(); }
+        }
+    }
 
     private static final String LIST_KEY = "list";
     private static final String CHECKED_COUNT_KEY = "count_checked";

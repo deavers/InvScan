@@ -1,36 +1,48 @@
 package com.example.invscan;
 
 import static com.example.invscan.utils.ConstsKt.getImgIdByCategory;
+import static com.example.invscan.utils.ConstsKt.getNameByCategory;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.icu.text.IDNA;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.util.SparseArray;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.example.invscan.domain.enteties.InventoryItem;
 import com.google.android.gms.vision.Frame;
@@ -39,12 +51,11 @@ import com.google.android.gms.vision.text.TextRecognizer;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.util.zip.Inflater;
-
 public class ScannerActivity extends AppCompatActivity {
 
     EditText mResultEt;
     ImageView mPreviewIv;
+    Integer counting = 1;
 
     private ScanViewModel viewModel;
     private static final int CAMERA_REQ_CODE = 200;
@@ -52,18 +63,21 @@ public class ScannerActivity extends AppCompatActivity {
     private static final int IMAGE_PICK_GALLERY_CODE = 1000;
     private static final int IMAGE_PICK_CAMERA_CODE = 1001;
 
+
     String cameraPermission[];
     String storagePermission[];
 
     Uri image_uri;
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         viewModel.getFoundedItem().observe(this, new Observer<InventoryItem>() {
             @Override
             public void onChanged(InventoryItem inventoryItem) {
-                alertDialog(inventoryItem);
+                if (counting == 1) {
+                    alertDialog(inventoryItem);
+                }
             }
         });
     }
@@ -74,12 +88,17 @@ public class ScannerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        final SearchFragment myFragment = new SearchFragment();
+
         viewModel = new ViewModelProvider(this).get(ScanViewModel.class);
         mResultEt = findViewById(R.id.resultEt);
         mPreviewIv = findViewById(R.id.imageIV);
 
         Button capturePhoto = findViewById(R.id.NewPhotoBT);
         Button galleryPhoto = findViewById(R.id.GalleryBT);
+        Button realtimeObj = findViewById(R.id.realtimeobj);
 
         capturePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +124,20 @@ public class ScannerActivity extends AppCompatActivity {
                 else {
                     // Accept
                     pickGallery();
+                }
+            }
+        });
+
+        realtimeObj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!checkCameraPermission()) {
+                    // Denied
+                    requestCameraPermission();
+                }
+                else {
+                    // Accept
+                    pickCamera();
                 }
             }
         });
@@ -226,6 +259,7 @@ public class ScannerActivity extends AppCompatActivity {
                         sb.append(myItem.getValue());
                         sb.append("\n");
                     }
+                    counting = 1;
                     viewModel.getItemByNum(sb.toString());
                     mResultEt.setText(sb.toString());
                 }
@@ -237,32 +271,82 @@ public class ScannerActivity extends AppCompatActivity {
         }
     }
 
-    AlertDialog alertDialog;
+    AlertDialog alertDialogg;
+    @SuppressLint("SetTextI18n")
     private void alertDialog(InventoryItem foundedItem) {
-        alertDialog = new AlertDialog.Builder(this).create();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialogTheme);
         if (foundedItem == null){
-            alertDialog.setTitle("Объект не найден");
-            alertDialog.setMessage("Инв. номер не найден \nОбласть обрезки не правильна \nОшибка определения");
+            View view = LayoutInflater.from(this).inflate(
+                    R.layout.layout_error_dialog,(ConstraintLayout)findViewById(R.id.layoutDialogContainer)
+            );
+            builder.setView(view);
+            ((TextView) view.findViewById(R.id.textTitle)).setText("Объект не найден");
+            ((TextView) view.findViewById(R.id.textMessage)).setText("Инв. номер не найден " +
+                    "\nОбласть обрезки не правильна " +
+                    "\nОшибка определения");
+            ((Button) view.findViewById(R.id.buttonAction)).setText("ОК");
+            ((ImageView) view.findViewById(R.id.imageIcon)).setImageResource(R.drawable.error);
+
+            alertDialogg = builder.create();
+
+            view.findViewById(R.id.buttonAction).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialogg.cancel();
+
+                }
+            });
+
+            if (alertDialogg.getWindow() != null) {
+                alertDialogg.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+            counting = 0;
+            alertDialogg.show();
+
+            ViewFlipper viewflip = findViewById(R.id.viewFlipper);
+            viewflip.setVisibility(View.INVISIBLE);
         } else {
-            alertDialog.setTitle("Объект найден");
-            alertDialog.setMessage("Инвентарный номер определен!");
-            alertDialog.setIcon(getImgIdByCategory(foundedItem.getCategory_id()));
+
+            View view = LayoutInflater.from(this).inflate(
+                    R.layout.layout_warning_dialog,(ConstraintLayout)findViewById(R.id.layoutDialogContainer)
+            );
+            builder.setView(view);
+            ((TextView) view.findViewById(R.id.textTitle)).setText("Объект найден!");
+            ((TextView) view.findViewById(R.id.textMessage)).setText("Это - "
+                    + getNameByCategory(foundedItem.getCategory_id()).substring(0, getNameByCategory(foundedItem.getCategory_id()).length() - 1) + "\n Хотите добавить в поиск?");
+            ((Button) view.findViewById(R.id.buttonNo)).setText("Нет");
+            ((Button) view.findViewById(R.id.buttonYes)).setText("Да");
+            ((ImageView) view.findViewById(R.id.imageIcon)).setImageResource(R.drawable.done);
+
+            alertDialogg = builder.create();
+
+            view.findViewById(R.id.buttonNo).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialogg.cancel();
+                }
+            });
+
+            view.findViewById(R.id.buttonYes).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ScannerActivity.this,MainActivity.class);
+                    intent.putExtra("key",mResultEt.toString());
+                    finish();
+                    alertDialogg.cancel();
+                }
+            });
+
+            if (alertDialogg.getWindow() != null) {
+                alertDialogg.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+            counting = 0;
+            alertDialogg.show();
+
+            ViewFlipper viewflip = findViewById(R.id.viewFlipper);
+            viewflip.setVisibility(View.INVISIBLE);
+            mPreviewIv.setImageResource(getImgIdByCategory(foundedItem.getCategory_id()));
         }
-
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogInterface, int which){
-                dialogInterface.dismiss();
-            }
-        });
-
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ввести в поиск", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogInterface, int which){
-
-            }
-        });
-
-        alertDialog.show();
     }
-
 
 }

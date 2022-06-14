@@ -23,6 +23,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/kabinet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="IT-Center"
@@ -90,7 +91,6 @@
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/scanbutton_theme"
-                android:onClick="openactiviti"
                 android:text="Scan"
                 android:textColor="@color/white"
                 android:textSize="13sp" />
