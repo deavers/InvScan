@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -143,6 +144,7 @@ public class CartListActivity extends AppCompatActivity {
                     for(InvItemChecked item: listItems){
                         if (item.getItem().getCategory_id() == i){
                             fos.write(getItemName(item).getBytes(StandardCharsets.UTF_8));
+                           // Log.d("tag", getItemName(item));
                         }
                     }
                     fos.write("\n".getBytes(StandardCharsets.UTF_8));

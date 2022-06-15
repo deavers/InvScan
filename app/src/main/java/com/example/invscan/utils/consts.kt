@@ -31,9 +31,9 @@ fun getItemName(itemChecked:InvItemChecked):String{
     val res = ""
         val num = itemChecked.item.inventory_num
         if (itemChecked.checked){
-            num.plus("✓")
+            num.plus("+")
         } else {
-            num.plus("✕")
+            num.plus("-")
         }
         num.plus("\n")
         res.plus(num)
