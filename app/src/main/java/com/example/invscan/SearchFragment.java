@@ -77,7 +77,22 @@ public class SearchFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        viewModel.getItemsByClassRoomNum(SELECTED_NUM);
+        //viewModel.getItemsByClassRoomNum(SELECTED_NUM);
+        if (itemsCheckedList.size() != 0){
+            Log.d("tag1",MainActivity.SELECTED_ITEM_INVENTORY);
+            if (MainActivity.SELECTED_ITEM_INVENTORY != ""){
+                for (InvItemChecked item: itemsCheckedList){
+                    if (!item.getChecked() && MainActivity.SELECTED_ITEM_INVENTORY.equals(item.getItem().getInventory_num())){
+                        item.setChecked(true);
+                        count1++;
+                        countobj.setText(count1.toString());
+                        MainActivity.SELECTED_ITEM_INVENTORY = "";
+                        adapter.setData(itemsCheckedList);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -88,6 +103,7 @@ public class SearchFragment extends Fragment {
     }
     SearchView searchlay;
     RecyclerView recyclerView;
+    Button countobj;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -97,7 +113,7 @@ public class SearchFragment extends Fragment {
         TextView datenow = (TextView) view.findViewById(R.id.textviewdate);
         TextView hoursnow = (TextView) view.findViewById(R.id.texthours);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        Button countobj = (Button) view.findViewById(R.id.countobjectss);
+        countobj = (Button) view.findViewById(R.id.countobjectss);
         Button scannerbt = (Button) view.findViewById(R.id.btnScan);
 
         scannerbt.setOnClickListener(new View.OnClickListener() {
@@ -187,6 +203,7 @@ public class SearchFragment extends Fragment {
         datenow.setText(dateString);
         hoursnow.setText(dateString1);
 
+        viewModel.getItemsByClassRoomNum(SELECTED_NUM);
         viewModel.getItems().observe(getViewLifecycleOwner(), new Observer<List<InventoryItem>>() {
             @Override
             public void onChanged(List<InventoryItem> inventoryItems) {
@@ -198,7 +215,7 @@ public class SearchFragment extends Fragment {
                     for (InventoryItem item:inventoryItems){
                         itemsCheckedList.add(new InvItemChecked(item,false));
                     }
-                    Log.d("tag1",MainActivity.SELECTED_ITEM_INVENTORY);
+/*                    Log.d("tag1",MainActivity.SELECTED_ITEM_INVENTORY);
                     if (MainActivity.SELECTED_ITEM_INVENTORY != ""){
                         for (InvItemChecked item: itemsCheckedList){
                             if (!item.getChecked() && MainActivity.SELECTED_ITEM_INVENTORY.equals(item.getItem().getInventory_num())){
@@ -209,7 +226,7 @@ public class SearchFragment extends Fragment {
                                 break;
                             }
                         }
-                    }
+                    }*/
                     adapter.setData(itemsCheckedList);
                 } else {
                     countobj.setVisibility(View.INVISIBLE);
