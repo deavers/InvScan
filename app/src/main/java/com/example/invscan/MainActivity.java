@@ -1,13 +1,19 @@
 package com.example.invscan;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.invscan.interfaces.MenuListener;
@@ -20,17 +26,6 @@ public class MainActivity extends AppCompatActivity implements MenuListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Fragment fragment1 = new SearchFragment();
-
-        if (fragment1 == new SearchFragment()) {
-            Bundle extras = getIntent().getExtras();
-            if (extras != null) {
-                String value = extras.getString("key");
-                extras.putString("key1",value);
-                fragment1.setArguments(extras);
-            }
-        }
 
         // Переменная навигационной панели
         bottomNav = findViewById(R.id.bottomNav);

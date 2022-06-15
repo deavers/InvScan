@@ -19,6 +19,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true"
+        android:windowSoftInputMode="adjustPan"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InvScan"
@@ -32,7 +33,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.InvScan.NoActionBar" />
+            android:theme="@style/Theme.InvScan.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ScannerActivity"
             android:exported="false"
@@ -48,8 +50,7 @@
         <activity
             android:name=".SplashScreen"
             android:exported="true"
-            android:theme="@style/Theme.InvScan.NoActionBar"
-            android:windowSoftInputMode="adjustPan" >
+            android:theme="@style/Theme.InvScan.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

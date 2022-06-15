@@ -57,6 +57,7 @@ public class ScannerActivity extends AppCompatActivity {
     EditText mResultEt;
     ImageView mPreviewIv;
     Integer counting = 1;
+    String out;
 
     private ScanViewModel viewModel;
     private static final int CAMERA_REQ_CODE = 200;
@@ -297,7 +298,6 @@ public class ScannerActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     alertDialogg.cancel();
-
                 }
             });
 
@@ -334,10 +334,8 @@ public class ScannerActivity extends AppCompatActivity {
             view.findViewById(R.id.buttonYes).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(ScannerActivity.this,MainActivity.class);
-                    intent.putExtra("key",mResultEt.toString());
-                    finish();
                     alertDialogg.cancel();
+                    finish();
                 }
             });
 

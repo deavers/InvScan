@@ -34,7 +34,7 @@ public class SearchFragment extends Fragment {
     private InvItemAdapter adapter;
     private SearchViewModel viewModel;
     List<InvItemChecked> itemsCheckedList;
-    Integer counting = 0;
+    Integer count1 = 0;
 
 
     public SearchFragment() {
@@ -68,19 +68,6 @@ public class SearchFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-       /* View rootView = getActivity().getSupportFragmentManager(R.layout.);
-
-        String text1;
-
-        Bundle data = getArguments();
-        if (data != null) {
-            text1 = data.getString("key1");
-
-            TextView kabinet = (TextView) rootView.findViewById(R.id.kabinet);
-            kabinet.setText(text1);
-
-        }*/
     }
 
     @Override
@@ -100,7 +87,6 @@ public class SearchFragment extends Fragment {
         TextView hoursnow = (TextView) view.findViewById(R.id.texthours);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         Button countobj = (Button) view.findViewById(R.id.countobjectss);
-        Switch onoffobj = (Switch) view.findViewById(R.id.switchCheck);
         Button scannerbt = (Button) view.findViewById(R.id.btnScan);
 
         scannerbt.setOnClickListener(new View.OnClickListener() {
@@ -131,20 +117,6 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        if (onoffobj != null) {
-            onoffobj.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                    if (isChecked) {
-                        counting++;
-                    } else {
-                        counting--;
-                    }
-                    countobj.setText(counting);
-                }
-            });
-        }
-
         clearbut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,8 +134,16 @@ public class SearchFragment extends Fragment {
                 for(InvItemChecked itemChecked: itemsCheckedList){
                     if (itemChecked.getItem().getInventory_num().equals(inventoryItem.getInventory_num())){
                         itemChecked.setChecked(checked);
+                        if (checked == true) {
+                            count1++;
+                        }
+                        if (checked == false) {
+                            count1--;
+                        }
+                        countobj.setText(count1.toString());
                         break;
                     }
+
                 }
             }
         });
@@ -185,7 +165,7 @@ public class SearchFragment extends Fragment {
         // Сегодняшняя дата
         long date = System.currentTimeMillis();
         long hours = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, ''yy");
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, yyyy");
         SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm");
         String dateString = sdf.format(date);
         String dateString1 = sdf1.format(hours);
