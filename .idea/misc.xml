@@ -24,8 +24,10 @@
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/thumb.xml" value="0.125" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/track.xml" value="0.125" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/drawable/warning_background.xml" value="0.1155" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/action_bar_layout.xml" value="0.19322916666666667" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/activity_cart_list.xml" value="0.25" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/activity_object_scanner.xml" value="0.36666666666666664" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/activity_scan.xml" value="0.25" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/activity_scanner.xml" value="0.33" />
         <entry key="..\:/MyProjects/InvScan/app/src/main/res/layout/activity_splash_screen.xml" value="0.22" />

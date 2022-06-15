@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.invscan.databinding.ActivityMainBinding;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
@@ -36,21 +37,6 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 public class SettingsFragment extends Fragment {
-
-    TextView mResultEt;
-    ImageView mPreviewIv;
-
-    private ScanViewModel viewModel;
-    private static final int CAMERA_REQ_CODE = 200;
-    private static final int STORAGE_REQ_CODE = 400;
-    private static final int IMAGE_PICK_GALLERY_CODE = 1000;
-    private static final int IMAGE_PICK_CAMERA_CODE = 1001;
-
-
-    String cameraPermission[];
-    String storagePermission[];
-
-    Uri image_uri;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -77,6 +63,7 @@ public class SettingsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
+
     }
 
     @Override
@@ -90,8 +77,23 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button scanneract = (Button) view.findViewById(R.id.scanerbycapimg);
-        Button scannerreal = (Button) view.findViewById(R.id.scanrealtime);
+        Button gallandcap = (Button) view.findViewById(R.id.scanerbycapimg);
+        Button realtimescan = (Button) view.findViewById(R.id.scanrealtime);
 
+        gallandcap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ScanActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        realtimescan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ObjectScanner.class);
+                startActivity(intent);
+            }
+        });
     }
 }

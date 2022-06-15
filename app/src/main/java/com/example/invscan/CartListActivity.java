@@ -112,11 +112,6 @@ public class CartListActivity extends AppCompatActivity {
 
     public void formOtchot() {
         File file = new File (path + "/" + dateString + ".txt");
-        String[] categorys = new String[0];
-        for (int i = 0; i < Integer.parseInt((String) totalselected.getText());i++) {
-            categorys = ("" + totalselected.getText()).split("");
-        }
-
 
         Toast.makeText(getApplicationContext(), "Отчёт сохранён", Toast.LENGTH_SHORT).show();
 
@@ -124,7 +119,7 @@ public class CartListActivity extends AppCompatActivity {
 
     }
 
-    public static void Save (File file, String data, String data1) {
+    public void Save(File file, String data, String data1) {
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(file);
@@ -133,6 +128,15 @@ public class CartListActivity extends AppCompatActivity {
 
         try {
             try {
+
+                for (int i=1;i<=7; i++){
+                    fos.write(getNameByCategory(i).getBytes(StandardCharsets.UTF_8));
+                    /*for (int l=1; l<=9; l++) {
+                        fos.write(inventarnumbers);
+                    }*/
+                    fos.write("\n".getBytes(StandardCharsets.UTF_8));
+                }
+
                 fos.write("Выбранных объектов - ".getBytes(StandardCharsets.UTF_8));
                 fos.write(data.getBytes(StandardCharsets.UTF_8));
                 fos.write("\nВ базе находиться - ".getBytes(StandardCharsets.UTF_8));
