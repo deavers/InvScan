@@ -29,13 +29,13 @@ fun getNameByCategory(categoryId:Int):String{
 
 fun getItemName(itemChecked:InvItemChecked):String{
     var res = ""
-        var num = itemChecked.item.inventory_num
-        if (itemChecked.checked){
-            num+=("+")
-        } else {
-            num+=("-")
-        }
-        num+="\n"
-        res+=num
-     return res
+    var num = itemChecked.item.inventory_num
+    if (itemChecked.checked){
+        num+=(" ✓")
+    } else {
+        num+=(" ✕")
+    }
+    num+="\n"
+    res+=num
+    return res
 }

@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements MenuListener {
     // Инциализация навигационной панели
     MeowBottomNavigation bottomNav;
 
+    public static String SELECTED_ITEM_INVENTORY = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

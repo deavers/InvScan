@@ -41,13 +41,11 @@ public class SearchFragment extends Fragment {
     List<InvItemChecked> itemsCheckedList2;
     Integer count1 = 0;
 
-
     public SearchFragment() {
         // Required empty public constructor
     }
 
     public static String SELECTED_NUM = "";
-    public static InventoryItem SELECTED_ITEM_INVENTORY = null;
     private static String CLASSROOM_KEY = "classroom";
 
     // TODO: Rename and change types and number of parameters
@@ -67,13 +65,19 @@ public class SearchFragment extends Fragment {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        Log.d("tag", SELECTED_NUM);
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("tag1",MainActivity.SELECTED_ITEM_INVENTORY);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        viewModel.getItemsByClassRoomNum(SELECTED_NUM);
     }
 
     @Override
@@ -180,7 +184,7 @@ public class SearchFragment extends Fragment {
         datenow.setText(dateString);
         hoursnow.setText(dateString1);
 
-        viewModel.getItemsByClassRoomNum(SELECTED_NUM);
+
         viewModel.getItems().observe(getViewLifecycleOwner(), new Observer<List<InventoryItem>>() {
             @Override
             public void onChanged(List<InventoryItem> inventoryItems) {
@@ -192,11 +196,14 @@ public class SearchFragment extends Fragment {
                     for (InventoryItem item:inventoryItems){
                         itemsCheckedList.add(new InvItemChecked(item,false));
                     }
-                    if (SELECTED_ITEM_INVENTORY != null){
+                    Log.d("tag1",MainActivity.SELECTED_ITEM_INVENTORY);
+                    if (MainActivity.SELECTED_ITEM_INVENTORY != ""){
                         for (InvItemChecked item: itemsCheckedList){
-                            if (!item.getChecked() && SELECTED_ITEM_INVENTORY.getInventory_num().equals(item.getItem().getInventory_num())){
+                            if (!item.getChecked() && MainActivity.SELECTED_ITEM_INVENTORY.equals(item.getItem().getInventory_num())){
                                 item.setChecked(true);
-                                SELECTED_ITEM_INVENTORY = null;
+                                count1++;
+                                countobj.setText(count1.toString());
+                                MainActivity.SELECTED_ITEM_INVENTORY = "";
                                 break;
                             }
                         }
@@ -208,15 +215,6 @@ public class SearchFragment extends Fragment {
                     adapter.setOption(InvItemAdapter.OPTION_WITHOUT_SWITCH);
                     for (InventoryItem item:inventoryItems){
                         itemsCheckedList2.add(new InvItemChecked(item,false));
-                    }
-                    if (SELECTED_ITEM_INVENTORY != null){
-                        for (InvItemChecked item: itemsCheckedList){
-                            if (!item.getChecked() && SELECTED_ITEM_INVENTORY.getInventory_num().equals(item.getItem().getInventory_num())){
-                                item.setChecked(true);
-                                SELECTED_ITEM_INVENTORY = null;
-                                break;
-                            }
-                        }
                     }
                     adapter.setData(itemsCheckedList2);
                 }

@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/scanbuttons"
-        android:text="В реальном времени (Beta)"
+        android:text="По объектам (Beta)"
         android:layout_marginBottom="60dp"
         android:textAllCaps="false"
         android:layout_marginStart="30dp"
@@ -58,12 +58,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/scanbuttons"
-        android:text="По фото или галереи"
+        android:text="Сканер\nПо фото или галереи"
         android:layout_marginBottom="60dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:textAllCaps="false"
-        android:textSize="19sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/scanrealtime"
         tools:layout_editor_absoluteX="0dp" />
 

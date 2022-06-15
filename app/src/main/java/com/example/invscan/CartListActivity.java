@@ -140,19 +140,21 @@ public class CartListActivity extends AppCompatActivity {
                         fos.write(inventarnumbers);
                     }*/
                     //listItems
-
+                    fos.write("\n".getBytes(StandardCharsets.UTF_8));
                     for(InvItemChecked item: listItems){
                         if (item.getItem().getCategory_id() == i){
+                            fos.write("     ".getBytes(StandardCharsets.UTF_8));
                             fos.write(getItemName(item).getBytes(StandardCharsets.UTF_8));
-                           // Log.d("tag", getItemName(item));
+                           Log.d("tag", getItemName(item));
                         }
                     }
                     fos.write("\n".getBytes(StandardCharsets.UTF_8));
                 }
-
-                fos.write("Выбранных объектов - ".getBytes(StandardCharsets.UTF_8));
+                fos.write("--------------------------------\n".getBytes(StandardCharsets.UTF_8));
+                fos.write("     Выбранных объектов - ".getBytes(StandardCharsets.UTF_8));
                 fos.write(data.getBytes(StandardCharsets.UTF_8));
-                fos.write("\nВ базе находиться - ".getBytes(StandardCharsets.UTF_8));
+                fos.write("\n--------------------------------\n".getBytes(StandardCharsets.UTF_8));
+                fos.write("     В базе находиться - ".getBytes(StandardCharsets.UTF_8));
                 fos.write(data1.getBytes(StandardCharsets.UTF_8));
             }
             catch (IOException e) { e.printStackTrace(); }

@@ -38,6 +38,14 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 public class SettingsFragment extends Fragment {
 
+    private static final int CAMERA_REQ_CODE = 200;
+    private static final int STORAGE_REQ_CODE = 400;
+    private static final int IMAGE_PICK_GALLERY_CODE = 1000;
+    private static final int IMAGE_PICK_CAMERA_CODE = 1001;
+
+    String cameraPermission[];
+    String storagePermission[];
+
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -83,17 +91,60 @@ public class SettingsFragment extends Fragment {
         gallandcap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ScanActivity.class);
-                startActivity(intent);
+                if (!checkCameraPermission()) {
+                    // Denied
+                    requestCameraPermission();
+                }
+                else {
+                    // Accept
+                    Intent intent = new Intent(getActivity(), ScanActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
 
         realtimescan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ObjectScanner.class);
-                startActivity(intent);
+                if (!checkCameraPermission()) {
+                    // Denied
+                    requestCameraPermission();
+                }
+                else {
+                    // Accept
+                    Intent intent = new Intent(getActivity(), ImageHelperActivity.class);
+                    startActivity(intent);
+                }
             }
         });
+
+        // Camera permission
+        cameraPermission = new String[]{Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        storagePermission = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    }
+
+    private void requestCameraPermission() {
+        ActivityCompat.requestPermissions(getActivity(),cameraPermission, CAMERA_REQ_CODE);
+    }
+
+    private boolean checkCameraPermission() {
+        boolean result = ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
+        boolean result1 = ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        return result && result1;
+    }
+
+    private void requestStoragePermission() {
+        ActivityCompat.requestPermissions(getActivity(),storagePermission, STORAGE_REQ_CODE);
+    }
+
+    private boolean checkStoragePermission() {
+        boolean result = ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        return result;
     }
 }

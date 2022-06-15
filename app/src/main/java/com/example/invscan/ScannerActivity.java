@@ -57,7 +57,6 @@ public class ScannerActivity extends AppCompatActivity {
     EditText mResultEt;
     ImageView mPreviewIv;
     Integer counting = 1;
-    String out;
 
     private ScanViewModel viewModel;
     private static final int CAMERA_REQ_CODE = 200;
@@ -103,7 +102,6 @@ public class ScannerActivity extends AppCompatActivity {
 
         Button capturePhoto = findViewById(R.id.NewPhotoBT);
         Button galleryPhoto = findViewById(R.id.GalleryBT);
-        Button realtimeObj = findViewById(R.id.realtimeobj);
 
         capturePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,20 +127,6 @@ public class ScannerActivity extends AppCompatActivity {
                 else {
                     // Accept
                     pickGallery();
-                }
-            }
-        });
-
-        realtimeObj.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!checkCameraPermission()) {
-                    // Denied
-                    requestCameraPermission();
-                }
-                else {
-                    // Accept
-                    pickCamera();
                 }
             }
         });
@@ -334,8 +318,8 @@ public class ScannerActivity extends AppCompatActivity {
             view.findViewById(R.id.buttonYes).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    MainActivity.SELECTED_ITEM_INVENTORY = foundedItem.getInventory_num();
                     alertDialogg.cancel();
-                    SearchFragment.SELECTED_ITEM_INVENTORY = foundedItem;
                     finish();
                 }
             });
@@ -351,5 +335,4 @@ public class ScannerActivity extends AppCompatActivity {
             mPreviewIv.setImageResource(getImgIdByCategory(foundedItem.getCategory_id()));
         }
     }
-
 }

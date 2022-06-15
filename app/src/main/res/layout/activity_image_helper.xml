@@ -5,17 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bgapps"
-    tools:context=".ScannerActivity">
+    tools:context=".ImageHelperActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="10dp"
+        android:text="Поиск по объектам"
+        android:textAlignment="center"
+        android:textSize="28sp"
+        android:textStyle="bold" />
 
     <androidx.cardview.widget.CardView
-        android:layout_marginTop="20dp"
         android:id="@+id/CardViewImage"
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="10dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp">
+
+        <pl.droidsonroids.gif.GifImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/inf"
+                />
 
         <ImageView
             android:id="@+id/imageIV"
@@ -23,35 +43,7 @@
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:background="#fff"/>
-
-        <ViewFlipper
-            android:id="@+id/viewFlipper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autoStart="true"
-            android:flipInterval="3000"
-            android:inAnimation="@android:anim/fade_in"
-            android:outAnimation="@android:anim/fade_out"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/goodcapture" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/badgallery" />
-
-        </ViewFlipper>
+            android:scaleType="fitCenter" />
 
     </androidx.cardview.widget.CardView>
 
@@ -67,7 +59,7 @@
         android:inputType="textMultiLine"
         android:maxHeight="150dp"
         android:padding="20dp"
-        android:text="Возможные результаты"
+        android:text="Результат"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="18sp"
@@ -92,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/NewPhotoBT"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/scanbuttons"
         android:text="Галерея"
