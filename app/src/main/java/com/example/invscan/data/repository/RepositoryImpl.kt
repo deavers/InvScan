@@ -24,5 +24,9 @@ class RepositoryImpl:DataRepository {
         return RetrofitInstance.api.getItems()
     }
 
+    override fun changeItemClassroom(invItemNum: String, numClass: String): Call<StatusResponse> {
+        return RetrofitInstance.api.changeItemClassroom(invItemNum, numClass)
+    }
+
 
 }

@@ -8,4 +8,5 @@ interface DataRepository {
     fun getItemsByClassroomNum(num:String):Call<GetClassroomResponse>
     fun getItemByNum(num: String):Call<GetItemResponse>
     fun getItems():Call<GetItemsResponse>
+    fun changeItemClassroom(invItemNum: String, numClass: String):Call<StatusResponse>
 }

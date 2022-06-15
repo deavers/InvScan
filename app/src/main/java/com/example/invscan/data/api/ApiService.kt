@@ -1,11 +1,9 @@
 package com.example.invscan.data.api
 
-import com.example.invscan.domain.enteties.GetAllClassroomsResponse
-import com.example.invscan.domain.enteties.GetClassroomResponse
-import com.example.invscan.domain.enteties.GetItemResponse
-import com.example.invscan.domain.enteties.GetItemsResponse
+import com.example.invscan.domain.enteties.*
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface ApiService {
@@ -21,5 +19,8 @@ interface ApiService {
 
     @GET("items")
     fun getItems():Call<GetItemsResponse>
+
+    @POST("items")
+    fun changeItemClassroom(@Query("inventory_num") invItemNum: String, @Query("class_room_num") numClass: String):Call<StatusResponse>
 
 }
