@@ -28,14 +28,14 @@ fun getNameByCategory(categoryId:Int):String{
 }
 
 fun getItemName(itemChecked:InvItemChecked):String{
-    val res = ""
-        val num = itemChecked.item.inventory_num
+    var res = ""
+        var num = itemChecked.item.inventory_num
         if (itemChecked.checked){
-            num.plus("+")
+            num+=("+")
         } else {
-            num.plus("-")
+            num+=("-")
         }
-        num.plus("\n")
-        res.plus(num)
+        num+="\n"
+        res+=num
      return res
 }

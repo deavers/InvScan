@@ -335,6 +335,7 @@ public class ScannerActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     alertDialogg.cancel();
+                    SearchFragment.SELECTED_ITEM_INVENTORY = foundedItem;
                     finish();
                 }
             });

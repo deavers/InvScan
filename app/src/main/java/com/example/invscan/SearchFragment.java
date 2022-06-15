@@ -47,6 +47,7 @@ public class SearchFragment extends Fragment {
     }
 
     public static String SELECTED_NUM = "";
+    public static InventoryItem SELECTED_ITEM_INVENTORY = null;
     private static String CLASSROOM_KEY = "classroom";
 
     // TODO: Rename and change types and number of parameters
@@ -191,6 +192,15 @@ public class SearchFragment extends Fragment {
                     for (InventoryItem item:inventoryItems){
                         itemsCheckedList.add(new InvItemChecked(item,false));
                     }
+                    if (SELECTED_ITEM_INVENTORY != null){
+                        for (InvItemChecked item: itemsCheckedList){
+                            if (!item.getChecked() && SELECTED_ITEM_INVENTORY.getInventory_num().equals(item.getItem().getInventory_num())){
+                                item.setChecked(true);
+                                SELECTED_ITEM_INVENTORY = null;
+                                break;
+                            }
+                        }
+                    }
                     adapter.setData(itemsCheckedList);
                 } else {
                     countobj.setVisibility(View.INVISIBLE);
@@ -198,6 +208,15 @@ public class SearchFragment extends Fragment {
                     adapter.setOption(InvItemAdapter.OPTION_WITHOUT_SWITCH);
                     for (InventoryItem item:inventoryItems){
                         itemsCheckedList2.add(new InvItemChecked(item,false));
+                    }
+                    if (SELECTED_ITEM_INVENTORY != null){
+                        for (InvItemChecked item: itemsCheckedList){
+                            if (!item.getChecked() && SELECTED_ITEM_INVENTORY.getInventory_num().equals(item.getItem().getInventory_num())){
+                                item.setChecked(true);
+                                SELECTED_ITEM_INVENTORY = null;
+                                break;
+                            }
+                        }
                     }
                     adapter.setData(itemsCheckedList2);
                 }
