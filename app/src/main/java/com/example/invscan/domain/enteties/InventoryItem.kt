@@ -15,3 +15,5 @@ data class InventoryItem(
 data class InvItemChecked(val item: InventoryItem,var checked:Boolean): Parcelable
 
 data class GetItemResponse(val status:Boolean,val message:String,val item: InventoryItem)
+
+data class GetItemsResponse(val status:Boolean,val message:String,val items: List<InventoryItem>?)

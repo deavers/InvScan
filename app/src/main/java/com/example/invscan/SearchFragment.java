@@ -1,5 +1,7 @@
 package com.example.invscan;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -24,16 +26,19 @@ import com.example.invscan.adapters.InvItemAdapter;
 import com.example.invscan.domain.enteties.InvItemChecked;
 import com.example.invscan.domain.enteties.InventoryItem;
 import com.example.invscan.interfaces.OnInvItemListener;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SearchFragment extends Fragment {
 
     private InvItemAdapter adapter;
     private SearchViewModel viewModel;
     List<InvItemChecked> itemsCheckedList;
+    List<InvItemChecked> itemsCheckedList2;
     Integer count1 = 0;
 
 
@@ -76,16 +81,17 @@ public class SearchFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
         return rootView;
     }
-
+    SearchView searchlay;
+    RecyclerView recyclerView;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(SearchViewModel.class);
-        SearchView searchlay = (SearchView) view.findViewById(R.id.search_field);
+        searchlay = (SearchView) view.findViewById(R.id.search_field);
         Button clearbut = (Button) view.findViewById(R.id.clearfilter);
         TextView datenow = (TextView) view.findViewById(R.id.textviewdate);
         TextView hoursnow = (TextView) view.findViewById(R.id.texthours);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         Button countobj = (Button) view.findViewById(R.id.countobjectss);
         Button scannerbt = (Button) view.findViewById(R.id.btnScan);
 
@@ -162,6 +168,7 @@ public class SearchFragment extends Fragment {
 
         //listItems = new ArrayList<>();
         itemsCheckedList = new ArrayList<>();
+        itemsCheckedList2 = new ArrayList<>();
         // Сегодняшняя дата
         long date = System.currentTimeMillis();
         long hours = System.currentTimeMillis();
@@ -177,11 +184,23 @@ public class SearchFragment extends Fragment {
             @Override
             public void onChanged(List<InventoryItem> inventoryItems) {
                 //listItems.clear();
-                itemsCheckedList.clear();
-                for (InventoryItem item:inventoryItems){
-                    itemsCheckedList.add(new InvItemChecked(item,false));
+                if (searchOption == 1){
+                    countobj.setVisibility(View.VISIBLE);
+                    itemsCheckedList.clear();
+                    adapter.setOption(InvItemAdapter.OPTION_DEFAULT);
+                    for (InventoryItem item:inventoryItems){
+                        itemsCheckedList.add(new InvItemChecked(item,false));
+                    }
+                    adapter.setData(itemsCheckedList);
+                } else {
+                    countobj.setVisibility(View.INVISIBLE);
+                    itemsCheckedList2.clear();
+                    adapter.setOption(InvItemAdapter.OPTION_WITHOUT_SWITCH);
+                    for (InventoryItem item:inventoryItems){
+                        itemsCheckedList2.add(new InvItemChecked(item,false));
+                    }
+                    adapter.setData(itemsCheckedList2);
                 }
-                adapter.submitList(itemsCheckedList);
                 //listItems.addAll(inventoryItems);
             }
         });
@@ -198,17 +217,73 @@ public class SearchFragment extends Fragment {
         return count;
     }
 
+    private Integer searchOption = 1;
+
     private void onFilterItems(String newText) {
         List<InvItemChecked> listFilter = new ArrayList<>();
-        if(!newText.equals("")){
-            for (InvItemChecked item: itemsCheckedList){
-                if (item.getItem().getInventory_num().contains(newText)){
-                    listFilter.add(item);
+        if (searchOption == 1){
+            if(!newText.equals("")){
+                for (InvItemChecked item: itemsCheckedList){
+                    if (item.getItem().getInventory_num().contains(newText)){
+                        listFilter.add(item);
+                    }
                 }
+                if (listFilter.size() != 0){
+                    adapter.setData(listFilter);
+                } else {
+                    searchOption = 2;
+                    viewModel.getAllItems();
+                }
+            } else {
+                adapter.setData(itemsCheckedList);
             }
-            adapter.submitList(listFilter);
         } else {
-            adapter.submitList(itemsCheckedList);
+            if(!newText.equals("")){
+                for (InvItemChecked item: itemsCheckedList2){
+                    if (item.getItem().getInventory_num().contains(newText)){
+                        listFilter.add(item);
+                    }
+                }
+                if (listFilter.size() != 0){
+                    adapter.setData(listFilter);
+                } else {
+                    showDialog();
+                }
+            } else {
+                adapter.setData(itemsCheckedList2);
+            }
         }
+
+    }
+
+    private void showDialog() {
+        Snackbar.make(getActivity().findViewById(android.R.id.content),
+                        "Предмет не найден в глобальном поиске!",Snackbar.LENGTH_INDEFINITE)
+                .setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        searchlay.setQuery("",true);
+                        searchOption = 1;
+                        count1 = 0;
+                        viewModel.getItemsByClassRoomNum(SELECTED_NUM);
+                    }
+                }).show();
+        /*AlertDialog alertDialog = new AlertDialog.Builder(requireContext()).create();
+        alertDialog.setTitle("Результат поиска");
+        alertDialog.setMessage("");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogInterface, int which){
+                searchOption = 1;
+                viewModel.getItemsByClassRoomNum(SELECTED_NUM);
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.show();*/
     }
 }

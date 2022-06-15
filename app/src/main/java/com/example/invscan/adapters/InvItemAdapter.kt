@@ -1,19 +1,21 @@
 package com.example.invscan.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.example.invscan.R
 import com.example.invscan.databinding.InvItemLayoutBinding
 import com.example.invscan.domain.enteties.InvItemChecked
-import com.example.invscan.domain.enteties.InventoryItem
 import com.example.invscan.interfaces.OnInvItemListener
 import com.example.invscan.utils.getImgIdByCategory
 
-class InvItemAdapter:ListAdapter<InvItemChecked,InvItemAdapter.InvViewHolder>(DiffInvItemCallback()){
+class InvItemAdapter:RecyclerView.Adapter<InvItemAdapter.InvViewHolder>(){
 
     var onItemCheckListener:OnInvItemListener? = null
+    var option = OPTION_DEFAULT;
+        // see
+    val listItems = mutableListOf<InvItemChecked>()
 
     class InvViewHolder(val binding: InvItemLayoutBinding):RecyclerView.ViewHolder(binding.root)
 
@@ -34,16 +36,38 @@ class InvItemAdapter:ListAdapter<InvItemChecked,InvItemAdapter.InvViewHolder>(Di
         }
     }*/
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun setData(list: List<InvItemChecked>){
+        listItems.clear()
+        listItems.addAll(list)
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: InvViewHolder, position: Int) {
-        val invItem = getItem(position)
+        val invItem = listItems[position]
         holder.binding.apply {
             imgCategory.setImageResource(getImgIdByCategory(invItem.item.category_id))
-            switchCheck.setOnClickListener {
-                onItemCheckListener?.onInvItemClick(invItem.item,switchCheck.isChecked)
+            if (option == OPTION_DEFAULT){
+                switchCheck.isVisible = true
+                switchCheck.setOnClickListener {
+                    onItemCheckListener?.onInvItemClick(invItem.item,switchCheck.isChecked)
+                }
+                switchCheck.isChecked = invItem.checked
+            } else {
+                switchCheck.isVisible = false
             }
-            switchCheck.isChecked = invItem.checked
             tvInvNum.text = invItem.item.inventory_num
         }
+    }
+
+
+    companion object {
+         const val OPTION_DEFAULT = 1
+         const val OPTION_WITHOUT_SWITCH = 2
+    }
+
+    override fun getItemCount(): Int {
+        return listItems.size
     }
 
 

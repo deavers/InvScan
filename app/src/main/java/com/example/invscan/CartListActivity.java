@@ -1,5 +1,6 @@
 package com.example.invscan;
 
+import static com.example.invscan.utils.ConstsKt.getItemsNames;
 import static com.example.invscan.utils.ConstsKt.getNameByCategory;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,6 +44,7 @@ public class CartListActivity extends AppCompatActivity {
     private Integer countChecked;
 
     String dateString;
+    ArrayList<InvItemChecked> listItems;
 
     public String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/InvScaner";
 
@@ -59,7 +61,7 @@ public class CartListActivity extends AppCompatActivity {
         dateString = sdf.format(date);
 
         Intent intent = getIntent();
-        ArrayList<InvItemChecked> list = intent.getParcelableArrayListExtra(LIST_KEY);
+        listItems = intent.getParcelableArrayListExtra(LIST_KEY);
         countChecked = intent.getIntExtra(CHECKED_COUNT_KEY,-1);
         countItems = intent.getIntExtra(COUNT_KEY,-1);
         totalselected.setText(countChecked.toString());
@@ -68,7 +70,7 @@ public class CartListActivity extends AppCompatActivity {
         recyclerViewList.setHasFixedSize(true);
         adapter = new CategoryAdapter();
         recyclerViewList.setAdapter(adapter);
-        setListOnAdapter(list);
+        setListOnAdapter(listItems);
 
         File dir = new File(path);
         dir.mkdir();
@@ -131,9 +133,11 @@ public class CartListActivity extends AppCompatActivity {
 
                 for (int i=1;i<=7; i++){
                     fos.write(getNameByCategory(i).getBytes(StandardCharsets.UTF_8));
-                    /*for (int l=1; l<=9; l++) {
+/*                    for (int l=1; l<=Integer.parseInt(data1); l++) {
                         fos.write(inventarnumbers);
                     }*/
+                    //listItems
+                    fos.write(getItemsNames(i,listItems).getBytes(StandardCharsets.UTF_8));
                     fos.write("\n".getBytes(StandardCharsets.UTF_8));
                 }
 

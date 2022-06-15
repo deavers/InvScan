@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.invscan.data.repository.RepositoryImpl
 import com.example.invscan.domain.enteties.GetClassroomResponse
+import com.example.invscan.domain.enteties.GetItemsResponse
 import com.example.invscan.domain.enteties.InventoryItem
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,5 +42,28 @@ class SearchViewModel:ViewModel() {
             })
         }
     }
+
+    fun getAllItems(){
+        repository.getItems().enqueue(object : Callback<GetItemsResponse>{
+            override fun onResponse(
+                call: Call<GetItemsResponse>,
+                response: Response<GetItemsResponse>
+            ) {
+                if (response.isSuccessful){
+                    response.body()?.let {
+                        _items.postValue(it.items)
+                    }
+                } else {
+                    _items.postValue(null)
+                    Log.e("tag","${response.code()}")
+                }
+            }
+            override fun onFailure(call: Call<GetItemsResponse>, t: Throwable) {
+                _items.postValue(null)
+                Log.e("tag","${t.message}")
+            }
+        })
+    }
+
 
 }
