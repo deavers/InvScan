@@ -27,9 +27,8 @@ fun getNameByCategory(categoryId:Int):String{
     }
 }
 
-fun getItemsNames(categoryId: Int,itemsChecked:ArrayList<InvItemChecked>):String{
+fun getItemName(itemChecked:InvItemChecked):String{
     val res = ""
-    itemsChecked.filter{ it.item.category_id == categoryId }.forEach { itemChecked ->
         val num = itemChecked.item.inventory_num
         if (itemChecked.checked){
             num.plus("✓")
@@ -38,6 +37,5 @@ fun getItemsNames(categoryId: Int,itemsChecked:ArrayList<InvItemChecked>):String
         }
         num.plus("\n")
         res.plus(num)
-    }
      return res
 }

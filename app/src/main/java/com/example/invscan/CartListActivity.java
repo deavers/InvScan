@@ -1,6 +1,6 @@
 package com.example.invscan;
 
-import static com.example.invscan.utils.ConstsKt.getItemsNames;
+import static com.example.invscan.utils.ConstsKt.getItemName;
 import static com.example.invscan.utils.ConstsKt.getNameByCategory;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -126,7 +126,9 @@ public class CartListActivity extends AppCompatActivity {
         try {
             fos = new FileOutputStream(file);
         }
-        catch (FileNotFoundException e ) { e.printStackTrace();}
+        catch (FileNotFoundException e ) {
+            e.printStackTrace();
+        }
 
         try {
             try {
@@ -137,7 +139,12 @@ public class CartListActivity extends AppCompatActivity {
                         fos.write(inventarnumbers);
                     }*/
                     //listItems
-                    fos.write(getItemsNames(i,listItems).getBytes(StandardCharsets.UTF_8));
+
+                    for(InvItemChecked item: listItems){
+                        if (item.getItem().getCategory_id() == i){
+                            fos.write(getItemName(item).getBytes(StandardCharsets.UTF_8));
+                        }
+                    }
                     fos.write("\n".getBytes(StandardCharsets.UTF_8));
                 }
 
