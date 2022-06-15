@@ -10,18 +10,18 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:text="Сканирование без базы"
         android:textAlignment="center"
         android:textSize="25sp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
         android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/CardViewImage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/CardViewImage"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         app:cardCornerRadius="150dp"
@@ -32,14 +32,17 @@
         tools:layout_editor_absoluteX="10dp">
 
         <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/gifka"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/inf"
             />
 
         <ImageView
+            android:id="@+id/mPreviewIv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
 
     </androidx.cardview.widget.CardView>
 
@@ -67,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/resultEt"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/scanbuttons"
         android:text="Сфотографировать"

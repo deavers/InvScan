@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -52,10 +53,14 @@ import com.google.android.gms.vision.text.TextRecognizer;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import pl.droidsonroids.gif.GifImageView;
+
 public class ScanActivity extends AppCompatActivity {
 
     EditText mResultEt;
     ImageView mPreviewIv;
+    GifImageView gifka;
+    CardView cardview;
 
     private static final int CAMERA_REQ_CODE = 200;
     private static final int STORAGE_REQ_CODE = 400;
@@ -77,7 +82,9 @@ public class ScanActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.action_bar_layout);
 
         mResultEt = findViewById(R.id.resultEt);
-        mPreviewIv = findViewById(R.id.imageIV);
+        mPreviewIv = findViewById(R.id.mPreviewIv);
+        gifka = findViewById(R.id.gifka);
+        cardview = findViewById(R.id.CardViewImage);
 
         Button capturePhoto = findViewById(R.id.NewPhotoBT);
         Button galleryPhoto = findViewById(R.id.GalleryBT);
@@ -208,6 +215,9 @@ public class ScanActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
                 mPreviewIv.setImageURI(resultUri);
+
+                cardview.setRadius(10);
+                gifka.setVisibility(View.INVISIBLE);
 
                 BitmapDrawable bitmapDrawable = (BitmapDrawable) mPreviewIv.getDrawable();
                 Bitmap bitmap = bitmapDrawable.getBitmap();
