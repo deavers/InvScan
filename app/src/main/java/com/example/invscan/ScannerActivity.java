@@ -81,6 +81,12 @@ public class ScannerActivity extends AppCompatActivity {
                 }
             }
         });
+        viewModel.getChangedClassroom().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Toast.makeText(ScannerActivity.this,s,Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @SuppressLint("WrongViewCast")
@@ -293,7 +299,49 @@ public class ScannerActivity extends AppCompatActivity {
 
             ViewFlipper viewflip = findViewById(R.id.viewFlipper);
             viewflip.setVisibility(View.INVISIBLE);
-        } else if (foundedItem != null){
+        }
+
+        else if (SearchFragment.SELECTED_NUM != foundedItem.getClass_room_num()) {
+            View view = LayoutInflater.from(this).inflate(
+                    R.layout.layout_warning_dialog,(ConstraintLayout)findViewById(R.id.layoutDialogContainer)
+            );
+            builder.setView(view);
+            ((TextView) view.findViewById(R.id.textTitle)).setText("Объекта найден в базе!");
+            ((TextView) view.findViewById(R.id.textMessage)).setText("Данного предмета нету в кабинете"
+                        +SearchFragment.SELECTED_NUM+
+                     "\n Хотите добавить в выбранный кабинет?");
+            ((Button) view.findViewById(R.id.buttonNo)).setText("Нет");
+            ((Button) view.findViewById(R.id.buttonYes)).setText("Да");
+            ((ImageView) view.findViewById(R.id.imageIcon)).setImageResource(R.drawable.done);
+
+            alertDialogg = builder.create();
+
+            view.findViewById(R.id.buttonNo).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialogg.cancel();
+                }
+            });
+
+            view.findViewById(R.id.buttonYes).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Добавить в базу
+                    viewModel.changeItemClassroom(foundedItem.getInventory_num(),SearchFragment.SELECTED_NUM);
+                }
+            });
+
+            if (alertDialogg.getWindow() != null) {
+                alertDialogg.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+            counting = 0;
+            alertDialogg.show();
+
+            ViewFlipper viewflip = findViewById(R.id.viewFlipper);
+            viewflip.setVisibility(View.VISIBLE);
+        }
+
+        else {
 
             View view = LayoutInflater.from(this).inflate(
                     R.layout.layout_warning_dialog,(ConstraintLayout)findViewById(R.id.layoutDialogContainer)
@@ -333,44 +381,6 @@ public class ScannerActivity extends AppCompatActivity {
             ViewFlipper viewflip = findViewById(R.id.viewFlipper);
             viewflip.setVisibility(View.INVISIBLE);
             mPreviewIv.setImageResource(getImgIdByCategory(foundedItem.getCategory_id()));
-        }
-        else if (foundedItem == null) {
-            View view = LayoutInflater.from(this).inflate(
-                    R.layout.layout_warning_dialog,(ConstraintLayout)findViewById(R.id.layoutDialogContainer)
-            );
-            builder.setView(view);
-            ((TextView) view.findViewById(R.id.textTitle)).setText("Объекта найден в базе!");
-            ((TextView) view.findViewById(R.id.textMessage)).setText("Данного предмета нету в кабинете"
-                     + "\n Хотите добавить в выбранный кабинет?");
-            ((Button) view.findViewById(R.id.buttonNo)).setText("Нет");
-            ((Button) view.findViewById(R.id.buttonYes)).setText("Да");
-            ((ImageView) view.findViewById(R.id.imageIcon)).setImageResource(R.drawable.done);
-
-            alertDialogg = builder.create();
-
-            view.findViewById(R.id.buttonNo).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alertDialogg.cancel();
-                }
-            });
-
-            view.findViewById(R.id.buttonYes).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Добавить в базу
-
-                }
-            });
-
-            if (alertDialogg.getWindow() != null) {
-                alertDialogg.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-            }
-            counting = 0;
-            alertDialogg.show();
-
-            ViewFlipper viewflip = findViewById(R.id.viewFlipper);
-            viewflip.setVisibility(View.VISIBLE);
         }
 
     }
