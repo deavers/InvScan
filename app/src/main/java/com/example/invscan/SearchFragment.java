@@ -132,6 +132,9 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 searchlay.setQuery("",false);
+                searchOption = 1;
+                count1 = 0;
+                viewModel.getItemsByClassRoomNum(SELECTED_NUM);
             }
         });
 
@@ -184,7 +187,6 @@ public class SearchFragment extends Fragment {
         datenow.setText(dateString);
         hoursnow.setText(dateString1);
 
-
         viewModel.getItems().observe(getViewLifecycleOwner(), new Observer<List<InventoryItem>>() {
             @Override
             public void onChanged(List<InventoryItem> inventoryItems) {
@@ -216,7 +218,8 @@ public class SearchFragment extends Fragment {
                     for (InventoryItem item:inventoryItems){
                         itemsCheckedList2.add(new InvItemChecked(item,false));
                     }
-                    adapter.setData(itemsCheckedList2);
+                    //adapter.setData(itemsCheckedList2);
+                    onFilterItems(searchlay.getQuery().toString());
                 }
                 //listItems.addAll(inventoryItems);
             }
@@ -264,6 +267,8 @@ public class SearchFragment extends Fragment {
                 if (listFilter.size() != 0){
                     adapter.setData(listFilter);
                 } else {
+                    itemsCheckedList2.clear();
+                    adapter.setData(itemsCheckedList2);
                     showDialog();
                 }
             } else {
