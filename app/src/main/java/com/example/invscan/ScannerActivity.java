@@ -334,7 +334,7 @@ public class ScannerActivity extends AppCompatActivity {
             viewflip.setVisibility(View.INVISIBLE);
             mPreviewIv.setImageResource(getImgIdByCategory(foundedItem.getCategory_id()));
         }
-        else if (foundedItem == basepoisk) {
+        else if (foundedItem == null) {
             View view = LayoutInflater.from(this).inflate(
                     R.layout.layout_warning_dialog,(ConstraintLayout)findViewById(R.id.layoutDialogContainer)
             );
