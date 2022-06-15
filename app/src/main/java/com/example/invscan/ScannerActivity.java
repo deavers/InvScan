@@ -300,16 +300,15 @@ public class ScannerActivity extends AppCompatActivity {
             ViewFlipper viewflip = findViewById(R.id.viewFlipper);
             viewflip.setVisibility(View.INVISIBLE);
         }
-
-        else if (SearchFragment.SELECTED_NUM != foundedItem.getClass_room_num()) {
+        else if (!SearchFragment.SELECTED_NUM.equals(foundedItem.getClass_room_num())) {
             View view = LayoutInflater.from(this).inflate(
                     R.layout.layout_warning_dialog,(ConstraintLayout)findViewById(R.id.layoutDialogContainer)
             );
             builder.setView(view);
             ((TextView) view.findViewById(R.id.textTitle)).setText("Объекта найден в базе!");
-            ((TextView) view.findViewById(R.id.textMessage)).setText("Данного предмета нету в кабинете"
-                        +SearchFragment.SELECTED_NUM+
-                     "\n Хотите добавить в выбранный кабинет?");
+            ((TextView) view.findViewById(R.id.textMessage)).setText("Данного предмета нету в кабинете "
+                        + SearchFragment.SELECTED_NUM +
+                     "\nХотите добавить в выбранный кабинет?");
             ((Button) view.findViewById(R.id.buttonNo)).setText("Нет");
             ((Button) view.findViewById(R.id.buttonYes)).setText("Да");
             ((ImageView) view.findViewById(R.id.imageIcon)).setImageResource(R.drawable.done);
@@ -328,6 +327,7 @@ public class ScannerActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     // Добавить в базу
                     viewModel.changeItemClassroom(foundedItem.getInventory_num(),SearchFragment.SELECTED_NUM);
+                    alertDialogg.cancel();
                 }
             });
 
@@ -340,7 +340,6 @@ public class ScannerActivity extends AppCompatActivity {
             ViewFlipper viewflip = findViewById(R.id.viewFlipper);
             viewflip.setVisibility(View.VISIBLE);
         }
-
         else {
 
             View view = LayoutInflater.from(this).inflate(
