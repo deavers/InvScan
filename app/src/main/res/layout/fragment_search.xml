@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:text="IT-Center"
                 android:textColor="#FFFFFF"
-                android:textSize="36sp" />
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/textviewdate"
