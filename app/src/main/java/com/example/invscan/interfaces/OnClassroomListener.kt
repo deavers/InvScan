@@ -1,5 +1,7 @@
 package com.example.invscan.interfaces
 
+import com.example.invscan.domain.enteties.Classroom
+
 interface OnClassroomListener {
-    fun onClassroomClick(num:String)
+    fun onClassroomClick(classroom: Classroom)
 }

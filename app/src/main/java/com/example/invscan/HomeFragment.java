@@ -14,15 +14,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.invscan.adapters.ClassroomAdapter;
-import com.example.invscan.domain.enteties.Category;
 import com.example.invscan.domain.enteties.Classroom;
 import com.example.invscan.interfaces.MenuListener;
 import com.example.invscan.interfaces.OnClassroomListener;
 
 import java.util.List;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 
 public class HomeFragment extends  Fragment {
 
@@ -66,8 +62,9 @@ public class HomeFragment extends  Fragment {
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new OnClassroomListener() {
             @Override
-            public void onClassroomClick(@NonNull String num) {
-                SearchFragment.SELECTED_NUM = num;
+            public void onClassroomClick(@NonNull Classroom classroom) {
+                SearchFragment.SELECTED_NUM = classroom.getNum();
+                SearchFragment.SELECTED_CLASSROOM_NAME = classroom.getName();
                 menuListener.onMenuClick(2);
             }
         });

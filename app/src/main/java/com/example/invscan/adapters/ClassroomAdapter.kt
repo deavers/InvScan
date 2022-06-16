@@ -27,7 +27,7 @@ class ClassroomAdapter:ListAdapter<Classroom,ClassroomAdapter.ClassroomViewHolde
         val classroom = getItem(position)
         holder.binding.tvClassroom.text = classroom.name
         holder.binding.layout.setOnClickListener {
-            onItemClickListener?.onClassroomClick(classroom.num)
+            onItemClickListener?.onClassroomClick(classroom)
         }
     }
 
