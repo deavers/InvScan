@@ -47,6 +47,7 @@ public class SearchFragment extends Fragment {
 
     public static String SELECTED_NUM = "";
     private static String CLASSROOM_KEY = "classroom";
+    public static String SELECTED_CLASSROM_NAME = "";
 
     // TODO: Rename and change types and number of parameters
     public static SearchFragment newInstance(String classroom) {

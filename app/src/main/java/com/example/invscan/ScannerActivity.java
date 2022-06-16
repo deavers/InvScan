@@ -272,7 +272,7 @@ public class ScannerActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialogTheme);
         if (foundedItem == null){
             View view = LayoutInflater.from(this).inflate(
-                    R.layout.layout_error_dialog,(ConstraintLayout)findViewById(R.id.layoutDialogContainer)
+                    R.layout.layout_error_dialog,(ConstraintLayout)findViewById(R.id.layoutDialogContainer), false
             );
             builder.setView(view);
             ((TextView) view.findViewById(R.id.textTitle)).setText("Объект не найден");
@@ -284,7 +284,7 @@ public class ScannerActivity extends AppCompatActivity {
 
             alertDialogg = builder.create();
 
-            view.findViewById(R.id.buttonNo).setOnClickListener(new View.OnClickListener() {
+            view.findViewById(R.id.buttonAction).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     alertDialogg.cancel();
