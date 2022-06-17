@@ -114,7 +114,7 @@ public class CartListActivity extends AppCompatActivity {
     }
 
     public void formOtchot() {
-        File file = new File (path + "/" + dateString + ".txt");
+        File file = new File (path + "/" + dateString+ SearchFragment.SELECTED_NUM + ".txt");
 
         Toast.makeText(getApplicationContext(), "Отчёт сохранён", Toast.LENGTH_SHORT).show();
 
@@ -133,7 +133,8 @@ public class CartListActivity extends AppCompatActivity {
 
         try {
             try {
-
+                String classRoomName = SearchFragment.SELECTED_CLASSROOM_NAME + "\n";
+                fos.write(classRoomName.getBytes(StandardCharsets.UTF_8));
                 for (int i=1;i<=7; i++){
                     fos.write(getNameByCategory(i).getBytes(StandardCharsets.UTF_8));
 /*                    for (int l=1; l<=Integer.parseInt(data1); l++) {
