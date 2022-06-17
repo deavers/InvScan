@@ -146,15 +146,16 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        searchlay.setOnSearchClickListener(new View.OnClickListener() {
+        searchlay.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onClose() {
                 if (!searchlay.isSubmitButtonEnabled()){
                     searchlay.setQuery("",true);
                     searchOption = 1;
                     count1 = 0;
                     viewModel.getItemsByClassRoomNum(SELECTED_NUM);
                 }
+                return true;
             }
         });
 
