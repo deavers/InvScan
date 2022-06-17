@@ -2,6 +2,7 @@ package com.example.invscan.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -48,13 +49,16 @@ class InvItemAdapter:RecyclerView.Adapter<InvItemAdapter.InvViewHolder>(){
         holder.binding.apply {
             imgCategory.setImageResource(getImgIdByCategory(invItem.item.category_id))
             if (option == OPTION_DEFAULT){
-                switchCheck.isVisible = true
+                tvInvClassroomNum.visibility = View.INVISIBLE
+                switchCheck.visibility = View.VISIBLE
                 switchCheck.setOnClickListener {
                     onItemCheckListener?.onInvItemClick(invItem.item,switchCheck.isChecked)
                 }
                 switchCheck.isChecked = invItem.checked
             } else {
-                switchCheck.isVisible = false
+                tvInvClassroomNum.visibility = View.VISIBLE
+                switchCheck.visibility = View.INVISIBLE
+                tvInvClassroomNum.text = invItem.item.class_room_num
             }
             tvInvNum.text = invItem.item.inventory_num
         }
