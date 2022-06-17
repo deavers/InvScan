@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity implements MenuListener {
         // Объекты навигационной панели
         bottomNav.add(new MeowBottomNavigation.Model(1,R.drawable.ic_home));
         bottomNav.add(new MeowBottomNavigation.Model(2,R.drawable.ic_search));
-        bottomNav.add(new MeowBottomNavigation.Model(3,R.drawable.ic_filter));
-
 
         // Показать нав. панель
         bottomNav.setOnShowListener(new MeowBottomNavigation.ShowListener() {
@@ -48,8 +46,6 @@ public class MainActivity extends AppCompatActivity implements MenuListener {
                     fragment = new HomeFragment();
                 }else if (item.getId()==2) {
                     fragment = new SearchFragment();
-                }else if (item.getId()==3) {
-                    fragment = new SettingsFragment();
                 }
 
                 // Вывод страницы

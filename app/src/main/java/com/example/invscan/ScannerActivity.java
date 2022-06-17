@@ -339,6 +339,7 @@ public class ScannerActivity extends AppCompatActivity {
 
             ViewFlipper viewflip = findViewById(R.id.viewFlipper);
             viewflip.setVisibility(View.VISIBLE);
+            mPreviewIv.setImageResource(getImgIdByCategory(foundedItem.getCategory_id()));
         }
         else {
 
@@ -348,7 +349,7 @@ public class ScannerActivity extends AppCompatActivity {
             builder.setView(view);
             ((TextView) view.findViewById(R.id.textTitle)).setText("Объект найден!");
             ((TextView) view.findViewById(R.id.textMessage)).setText("Это - "
-                    + getNameByCategory(foundedItem.getCategory_id()).substring(0, getNameByCategory(foundedItem.getCategory_id()).length() - 1) + "\n Хотите добавить в поиск?");
+                    + getNameByCategory(foundedItem.getCategory_id()).substring(0, getNameByCategory(foundedItem.getCategory_id()).length() - 1) + "\nХотите добавить в поиск?");
             ((Button) view.findViewById(R.id.buttonNo)).setText("Нет");
             ((Button) view.findViewById(R.id.buttonYes)).setText("Да");
             ((ImageView) view.findViewById(R.id.imageIcon)).setImageResource(R.drawable.done);

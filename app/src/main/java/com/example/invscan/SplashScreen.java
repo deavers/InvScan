@@ -21,12 +21,13 @@ import java.net.InetAddress;
 public class SplashScreen extends AppCompatActivity {
 
     ConnectionDetector cd;
+    Double x;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-
+        x = (Math.random()*((3000-1000)+1))+1000;
         cd = new ConnectionDetector(this);
 
         new Handler().postDelayed(new Runnable() {
@@ -47,7 +48,7 @@ public class SplashScreen extends AppCompatActivity {
                     }, 2000);
                 }
             }
-        }, 3000);
+        }, x.intValue());
 
     }
 

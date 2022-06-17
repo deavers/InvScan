@@ -58,7 +58,7 @@ public class CartListActivity extends AppCompatActivity {
 
         // Сегодняшняя дата
         long date = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("yy_MM_dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yy_MM_dd_");
         dateString = sdf.format(date);
 
         Intent intent = getIntent();
@@ -116,7 +116,7 @@ public class CartListActivity extends AppCompatActivity {
     public void formOtchot() {
         File file = new File (path + "/" + dateString+ SearchFragment.SELECTED_NUM + ".txt");
 
-        Toast.makeText(getApplicationContext(), "Отчёт сохранён", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Отчёт сохранён в папке InvScanner", Toast.LENGTH_SHORT).show();
 
         Save (file, totalselected.getText().toString(),basecount.getText().toString());
 
@@ -134,7 +134,9 @@ public class CartListActivity extends AppCompatActivity {
         try {
             try {
                 String classRoomName = SearchFragment.SELECTED_CLASSROOM_NAME + "\n";
+                fos.write("     ".getBytes(StandardCharsets.UTF_8));
                 fos.write(classRoomName.getBytes(StandardCharsets.UTF_8));
+                fos.write("\n".getBytes(StandardCharsets.UTF_8));
                 for (int i=1;i<=7; i++){
                     fos.write(getNameByCategory(i).getBytes(StandardCharsets.UTF_8));
 /*                    for (int l=1; l<=Integer.parseInt(data1); l++) {

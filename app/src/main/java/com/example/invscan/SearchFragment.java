@@ -264,8 +264,8 @@ public class SearchFragment extends Fragment {
                 //listItems.addAll(inventoryItems);
             }
         });
-
     }
+
 
     private Integer getCountOfCheck(){
         Integer count = 0;
