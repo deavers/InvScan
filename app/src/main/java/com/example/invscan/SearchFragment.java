@@ -204,7 +204,14 @@ public class SearchFragment extends Fragment {
         String dateString1 = sdf1.format(hours);
         datenow.setText(dateString);
         hoursnow.setText(dateString1);
-        kabinet.setText(SearchFragment.SELECTED_CLASSROOM_NAME);
+
+        if (SearchFragment.SELECTED_CLASSROOM_NAME.length() > 15) {
+            kabinet.setText("Каб. " + SearchFragment.SELECTED_CLASSROOM_NAME.substring(8));
+        }
+        else {
+            kabinet.setText(SearchFragment.SELECTED_CLASSROOM_NAME);
+        }
+
 
         viewModel.getItemsByClassRoomNum(SELECTED_NUM);
         viewModel.getItems().observe(getViewLifecycleOwner(), new Observer<List<InventoryItem>>() {
