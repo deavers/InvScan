@@ -250,7 +250,16 @@ Group: 18-VT-2 | Year: 2022
 
 ---
 
+## 🔗 Related Projects
+
+This app requires a running backend server to function.
+
+| Repository | Description |
+|---|---|
+| [BaseInvScan](https://github.com/deavers/BaseInvScan) | Laravel REST API backend — provides inventory items, classrooms and categories |
+
+To run the full project, clone and start [BaseInvScan](https://github.com/deavers/BaseInvScan) first, then update `BASE_URL` in the app's constants file before building.
+
 ## 📜 License
 
 This project was developed as an educational diploma project.  
-For reuse or commercial deployment, please contact the author.
