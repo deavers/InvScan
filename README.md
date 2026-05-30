@@ -31,8 +31,8 @@ The application uses a **2-tier client-server architecture**:
 
 ```
 ┌────────────────────┐         HTTP (REST API)        ┌─────────────────────┐
-│   Android Client   │  ──────────────────────────►  │    Remote Server     │
-│  (Kotlin + ML Kit) │  ◄──────────────────────────  │  MariaDB + PHP API  │
+│   Android Client   │  ──────────────────────────►   │    Remote Server    │
+│  (Kotlin + ML Kit) │  ◄──────────────────────────   │  MariaDB + PHP API  │
 └────────────────────┘                                └─────────────────────┘
 ```
 
